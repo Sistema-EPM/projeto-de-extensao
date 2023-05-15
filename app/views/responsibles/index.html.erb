@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Responsibles</h1>
+
+<div id="responsibles">
+  <% @responsibles.each do |responsible| %>
+    <%= render responsible %>
+    <p>
+      <%= link_to "Show this responsible", responsible %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New responsible", new_responsible_path %>

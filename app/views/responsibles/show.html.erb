@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @responsible %>
+
+<div>
+  <%= link_to "Edit this responsible", edit_responsible_path(@responsible) %> |
+  <%= link_to "Back to responsibles", responsibles_path %>
+
+  <%= button_to "Destroy this responsible", @responsible, method: :delete %>
+</div>

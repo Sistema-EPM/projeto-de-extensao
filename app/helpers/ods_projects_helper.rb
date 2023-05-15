@@ -1,0 +1,2 @@
+module OdsProjectsHelper
+end

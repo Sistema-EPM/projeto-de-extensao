@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Archives</h1>
+
+<div id="archives">
+  <% @archives.each do |archive| %>
+    <%= render archive %>
+    <p>
+      <%= link_to "Show this archive", archive %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New archive", new_archive_path %>

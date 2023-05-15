@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @ods_project %>
+
+<div>
+  <%= link_to "Edit this ods project", edit_ods_project_path(@ods_project) %> |
+  <%= link_to "Back to ods projects", ods_projects_path %>
+
+  <%= button_to "Destroy this ods project", @ods_project, method: :delete %>
+</div>
