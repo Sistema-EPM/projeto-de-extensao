@@ -6,7 +6,7 @@
 * Docker
 * Docker Compose
 
-Iniciando
+Iniciando a aplicação
 
 * Clone o repositório;
 * Realize a build do container: `sudo docker compose build`;
