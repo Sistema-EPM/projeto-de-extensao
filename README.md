@@ -13,4 +13,4 @@ Iniciando a aplicação:
 * Inicialize o container: `sudo docker compose up`;
 * Abra o bash da aplicação: `docker exec -it projeto-de-extensao-web-1 /bin/bash`;
 * Crie o banco de dados: `rails db:create`;
-* Abra a aplicação na web: `localhost:3000`.
+* Abra a aplicação na web: `localhost:3000`..
