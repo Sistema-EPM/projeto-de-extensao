@@ -57,6 +57,11 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def search
+    @name = params[:search]
+    @projects_by_name = Project.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project

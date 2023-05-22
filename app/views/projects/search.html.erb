@@ -1,0 +1,26 @@
+<% if @projects_by_name.nil? %>
+  <p>Nenhum projeto encontrado</p>
+<% else %>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Descrição</th>
+        <th>Status</th>
+        <th>Competência</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @projects_by_name.each do |project| %>
+        <tr>
+          <td><%= project.name %></td>
+          <td><%= project.description %></td>
+          <td><%= project.status %></td>
+          <td><%= project.competency %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
