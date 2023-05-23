@@ -1,8 +1,13 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Students</h1>
+<h1>Alunos</h1>
 
 <div id="students">
+  <%= form_tag('/search_student', method: 'get') do %>
+    <%= text_field_tag :search, params[:search], placeholder: 'Busque um aluno pelo nome' %>
+    <%= submit_tag 'Search' %>
+  <% end %>
+
   <% @students.each do |student| %>
     <%= render student %>
     <p>

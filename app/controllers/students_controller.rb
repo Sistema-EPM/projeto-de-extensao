@@ -57,6 +57,14 @@ class StudentsController < ApplicationController
     end
   end
 
+  def search_student
+    @name = params[:search]
+    @students_by_name = Student.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%")
+      .select(:name, :email, :status)
+      .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+        FROM reports r WHERE r.student_id = students.id) AS reported_hours")
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
