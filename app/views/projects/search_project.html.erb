@@ -6,8 +6,9 @@
       <tr>
         <th>Nome</th>
         <th>Descrição</th>
-        <th>Status</th>
         <th>Competência</th>
+        <th>Status</th>
+        <th>Horas reportadas</th>
         <th colspan="2"></th>
       </tr>
     </thead>
@@ -17,8 +18,9 @@
         <tr>
           <td><%= project.name %></td>
           <td><%= project.description %></td>
-          <td><%= project.status %></td>
           <td><%= project.competency %></td>
+          <td><%= project.status %></td>
+          <td><%= project.reported_hours %></td>
         </tr>
       <% end %>
     </tbody>

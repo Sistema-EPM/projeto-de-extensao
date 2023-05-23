@@ -57,9 +57,12 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def search
+  def search_project
     @name = params[:search]
     @projects_by_name = Project.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%")
+      .select(:name, :description, :competency, :status)
+      .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+        FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
   end
 
   private
