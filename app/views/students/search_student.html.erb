@@ -1,0 +1,26 @@
+<% if @students_by_name.nil? %>
+  <p>Nenhum aluno encontrado</p>
+<% else %>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Status</th>
+        <th>Horas reportadas</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @students_by_name.each do |student| %>
+        <tr>
+          <td><%= student.name %></td>
+          <td><%= student.email %></td>
+          <td><%= student.status %></td>
+          <td><%= student.reported_hours %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
