@@ -3,7 +3,7 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @students = Student.all
+    @students = Student.all.where(status: 1)
   end
 
   # GET /students/1 or /students/1.json
@@ -22,6 +22,7 @@ class StudentsController < ApplicationController
   # POST /students or /students.json
   def create
     @student = Student.new(student_params)
+    @student.status = 1
 
     respond_to do |format|
       if @student.save
