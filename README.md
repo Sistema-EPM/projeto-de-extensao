@@ -9,8 +9,9 @@
 Iniciando a aplicação:
 
 * Clone o repositório;
-* Realize a build do container: `sudo docker compose build`;
-* Inicialize o container: `sudo docker compose up`;
-* Abra o bash da aplicação: `docker exec -it projeto-de-extensao-web-1 /bin/bash`;
+* Realize a build do container: `make build`;
+* Inicialize o container: `make docker`;
+* Abra o bash da aplicação: `make bash`;
+* Abra o rails c da aplicação: `make rails`;
 * Crie o banco de dados: `rails db:create`;
 * Abra a aplicação na web: `localhost:3000`..
