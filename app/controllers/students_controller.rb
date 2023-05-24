@@ -22,6 +22,7 @@ class StudentsController < ApplicationController
   # POST /students or /students.json
   def create
     @student = Student.new(student_params)
+    @student.status = 1
 
     respond_to do |format|
       if @student.save
