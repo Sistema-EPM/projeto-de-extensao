@@ -15,12 +15,10 @@
   </p>
 
   <% if student.reports.exists? %>
-    <% student.reports.each do |report| %>
-      <p>
-        <strong>Horas reportadas:</strong>
-        <%= report.reported_effort ? report.reported_effort : "0" %>
-      </p>
-    <% end %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= student.reports.sum(:reported_effort) ? student.reports.sum(:reported_effort) : "0" %>
+    </p>
   <% else %>
     <p>
       <strong>Horas reportadas:</strong>
