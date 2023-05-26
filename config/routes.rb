@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :organizations
   resources :courses
   resources :responsibles
+  resources :login
 
   root to: "projects#index"
   get '/search_project', to: 'projects#search_project', as: :search_project
