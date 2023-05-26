@@ -8,6 +8,7 @@ class StudentsController < ApplicationController
 
   # GET /students/1 or /students/1.json
   def show
+    @projects_by_student = @student.projects.includes(:reports)
   end
 
   # GET /students/new
