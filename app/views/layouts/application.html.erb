@@ -12,6 +12,15 @@
 
   <body>
     <%= render 'shared/navbar' %>
-    <%= yield %>
+
+    <% flash.each do |key, value| %>
+      <div class="flash-<%= key %>">
+        <%= value %>
+      </div>
+    <% end %>
+
+    <div class="primary-table" style="padding: 2% 0">
+      <%= yield %>
+    </div>
   </body>
 </html>
