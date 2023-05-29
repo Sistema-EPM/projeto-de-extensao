@@ -1,26 +1,29 @@
 <% if @students_by_name.nil? %>
   <p>Nenhum aluno encontrado</p>
 <% else %>
-  <table class="table table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>E-mail</th>
-        <th>Status</th>
-        <th>Horas reportadas</th>
-        <th colspan="2"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @students_by_name.each do |student| %>
+  <div class="table-responsive primary-table">
+    <table class="table table-bordered table-hover">
+      <thead>
         <tr>
-          <td><%= student.name %></td>
-          <td><%= student.email %></td>
-          <td><%= student.status ? "Ativo" : "Evadido" %></td>
-          <td><%= student.reported_hours %></td>
+          <th class="col-2">Nome</th>
+          <th class="col-4">E-mail</th>
+          <th class="col-4">Status</th>
+          <th class="col-4">Horas reportadas</th>
+          <th colspan="2"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% @students_by_name.each do |student| %>
+          <tr>
+            <td class="col-4"><%= student.name %></td>
+            <td class="col-4"><%= student.email %></td>
+            <td class="col-4"><%= student.status %></td>
+            <td style="width: 10%"><%= student.reported_hours %></td>
+            <%# <td colspan="2"> %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
