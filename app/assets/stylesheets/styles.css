@@ -1,0 +1,18 @@
+.primary-table {
+  max-width: 70vw;
+  margin: auto;
+}
+
+.row-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.row-link:hover {
+  background-color: #f5f5f5;
+  text-decoration: none;
+}
+
+.row-link:active {
+  background-color: gray;
+}
