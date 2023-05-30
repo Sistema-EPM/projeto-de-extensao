@@ -14,15 +14,14 @@
       background-color: #f2f2f2;
     }
 
-    .container {
-      width: 100%;
-      max-width: 400px;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin-top: 100px;
+    .box-cadastro {
+    position: relative;
+    width: 345px;
+    height: 390px;
+    top: 75px;
+    background: #FFFFFF;
+    border-radius: 5px;
+    margin: 0 auto;
     }
 
     h2 {
@@ -31,40 +30,67 @@
       color: #5E8F87;
     }
 
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 20px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+    .input {
+        display: flex;
+        width: 75%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    input[type="submit"] {
+    .teste {
+        position: relative;
+        width: 345px;
+        height: 460px;
+        margin: 0 auto;
+        padding: 45px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 113px;
+    }
+
+    .buttonRegister {
       display: block;
       margin: 0 auto;
       width: 40%;
       padding: 10px;
-      background-color: #4CAF50;
+      background-color: #5E8F87;
       color: #fff;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      margin-top: 35px;
     }
 
-    input[type="submit"]:hover {
-      background-color: #45a049;
+    .line {
+      position: relative;
+      border: 1px solid #5E8F87;
+      margin-bottom: 30px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100px;
+    }  
+
+    buttonRegister :hover {
+      background-color: #516a66;
     }
+
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="teste">
     <h2>Login</h2>
+    <div class="line"></div>
     <form>
-      <input type="text" name="username" placeholder="E-mail...">
-      <input type="password" name="password" placeholder="Senha...">
-      <input type="submit" value="Entrar">
+        <input type="text" class="input" name="username" placeholder="Nome...">
+        <input type="text" class="input" name="username" placeholder="E-mail...">
+        <input type="submit" class="buttonRegister" value="Entrar">
     </form>
+
   </div>
 </body>
 </html>
