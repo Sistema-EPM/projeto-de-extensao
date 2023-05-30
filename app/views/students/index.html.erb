@@ -1,19 +1,24 @@
-<p style="color: green"><%= notice %></p>
-
 <h1>Alunos</h1>
 
-<div id="students">
-  <%= form_tag('/search_student', method: 'get') do %>
-    <%= text_field_tag :search, params[:search], placeholder: 'Busque um aluno pelo nome' %>
-    <%= submit_tag 'Search' %>
-  <% end %>
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>Idade</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.name %></td>
+        <td><%= student.email %></td>
+        <td>
+          <%= link_to "Mostrar", student %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-  <% @students.each do |student| %>
-    <%= render student %>
-    <p>
-      <%= link_to "Show this student", student %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New student", new_student_path %>
+<%= link_to "Novo aluno", new_student_path %>
