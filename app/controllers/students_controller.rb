@@ -3,6 +3,7 @@ class StudentsController < ApplicationController
 
   # GET /students or /students.json
   def index
+    @context = "Alunos"
     @students = Student.all.where(status: 1)
   end
 

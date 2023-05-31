@@ -1,24 +1,33 @@
-<h1>Alunos</h1>
+<p style="color: green"><%= notice %></p>
 
-<table class="table table-bordered table-hover">
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>Idade</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @students.each do |student| %>
-      <tr>
-        <td><%= student.name %></td>
-        <td><%= student.email %></td>
-        <td>
-          <%= link_to "Mostrar", student %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div id="students">
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Status</th>
+          <th>Horas reportadas</th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
 
-<%= link_to "Novo aluno", new_student_path %>
+      <tbody>
+        <% @students.each do |student| %>
+          <div>
+            <tr>
+              <td><%= link_to student.name, student, class: "row-link" %></td>
+              <td><%= student.email %></td>
+              <td><%= student.status ? "Ativo" : "Evadido" %></td>
+              <td><%= student.reports.sum(:reported_effort) %></td>
+              <td><%= button_to "Excluir", student, class: "btn btn-danger", method: :delete, data: { confirm: "Você tem certeza que deseja excluir o aluno #{student.name}?" } %></td>
+            </tr>
+          </div>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
