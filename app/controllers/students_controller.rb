@@ -1,5 +1,5 @@
 class StudentsController < ApplicationController
-  before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :set_student, only: %i[ show edit update ]
 
   # GET /students or /students.json
   def index
@@ -52,10 +52,17 @@ class StudentsController < ApplicationController
 
   # DELETE /students/1 or /students/1.json
   def destroy
-    @student.destroy
+    return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
+
+    selected_ids = params[:selected_ids]
+    if selected_ids.present?
+      Student.where(id: selected_ids).destroy_all
+    else
+      @student.destroy
+    end
 
     respond_to do |format|
-      format.html { redirect_to students_url, notice: "Student was successfully destroyed." }
+      format.html { redirect_to students_url, notice: "Aluno excluído com sucesso." }
       format.json { head :no_content }
     end
   end
@@ -66,6 +73,13 @@ class StudentsController < ApplicationController
       .select(:name, :email, :status)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.student_id = students.id) AS reported_hours")
+
+    @context = @students_by_name.present? ? "Resultados da busca" : "Nenhum aluno encontrado"
+  end
+
+  def show_inactive_students
+    @context = "Alunos inativos"
+    @inactive_students = Student.all.where(status: 0)
   end
 
   private
