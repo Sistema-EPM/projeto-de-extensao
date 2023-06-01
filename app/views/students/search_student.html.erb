@@ -1,29 +1,30 @@
+<p style="color: green"><%= notice %></p>
+
 <% if @students_by_name.nil? %>
   <p>Nenhum aluno encontrado</p>
 <% else %>
-  <div class="table-responsive primary-table">
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0" class="table-responsive primary-table">
     <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th class="col-2">Nome</th>
-          <th class="col-4">E-mail</th>
-          <th class="col-4">Status</th>
-          <th class="col-4">Horas reportadas</th>
-          <th colspan="2"></th>
-        </tr>
-      </thead>
+      <%= render partial: "table" %>
 
       <tbody>
         <% @students_by_name.each do |student| %>
-          <tr>
-            <td class="col-4"><%= student.name %></td>
-            <td class="col-4"><%= student.email %></td>
-            <td class="col-4"><%= student.status %></td>
-            <td style="width: 10%"><%= student.reported_hours %></td>
-            <%# <td colspan="2"> %>
+          <tr id="student-<%= student.id %>">
+            <td style="text-align: center">
+              <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
+            </td>
+            <td><%= link_to student.name, class: "row-link" %></td>
+            <td><%= student.email %></td>
+            <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
+            <td style="text-align: center"><%= student.reported_hours %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
+    <%= link_to "Novo", new_student_path, class: "btn btn-primary" %>
+    <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
   </div>
 <% end %>
+
+<%= javascript_include_tag 'students' %>

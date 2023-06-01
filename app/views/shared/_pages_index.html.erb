@@ -3,12 +3,11 @@
     <h1><%= @context %></h1>
   </div>
   <div style="display: inline-block; margin-left: 10px; padding-top: 1rem">
-    <%= link_to "+", new_student_path, class: "btn btn-primary" %>
   </div>
 </div>
 <div class="form-outline">
   <%= form_tag('/search_student', method: 'get', style: "display: flex; justify-content: space-between") do %>
     <%= text_field_tag :search, params[:search], placeholder: 'Busque um aluno pelo nome', class: "form-control", style: "display: inline-block; margin-right: 5px" %>
-    <%= submit_tag 'Search', type: "button", class: "btn btn-primary", style: "display: inline-block" %>
+    <%= submit_tag 'Pesquisar', type: "button", class: "btn btn-primary", style: "display: inline-block" %>
   <% end %>
 </div>
