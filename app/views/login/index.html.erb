@@ -45,13 +45,13 @@
     .container {
         position: relative;
         width: 500px;
-        height: 460px;
+        height: 450px;
         margin: 0 auto;
         padding: 45px;
         background-color: #fff;
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 140px;
+        margin-top: 140px; 
     }
 
     .buttonRegister {
@@ -79,19 +79,44 @@
     buttonRegister :hover {
       background-color: #516a66;
     }
+    
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      position: relative;
+      top: 30px;
+    }
 
+    .footer-message {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .footer-button {
+      display: inline-block;
+      color: yellow;
+      font-weight: bold;
+      border: 1px solid yellow;
+      border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #FFF;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Login</h2>
+    <h2>Entrar</h2>
     <div class="line"></div>
     <form>
-        <input type="text" class="input" name="username" placeholder="Nome...">
-        <input type="text" class="input" name="username" placeholder="E-mail...">
+        <input type="email" class="input" name="username" placeholder="Nome...">
+        <input type="password" class="input" name="username" placeholder="E-mail...">
         <input type="submit" class="buttonRegister" value="Entrar">
     </form>
-
+    <div class="footer">
+      <span class="footer-message">Ainda não tem cadastro?</span>
+      <button class="footer-button">Cadastra-se</button>
+    </div>
   </div>
 </body>
 </html>
