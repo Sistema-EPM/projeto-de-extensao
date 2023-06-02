@@ -33,7 +33,7 @@
 
     .input {
         display: flex;
-        width: 75%;
+        width: 90%;
         padding: 10px;
         margin-bottom: 20px;
         border: 1px solid #ccc;
@@ -44,8 +44,8 @@
 
     .container {
         position: relative;
-        width: 500px;
-        height: 450px;
+        width: 400px;
+        height: 400px;
         margin: 0 auto;
         padding: 45px;
         background-color: #fff;
@@ -95,12 +95,23 @@
     .footer-button {
       display: inline-block;
       color: yellow;
+      font-size: 14px;
       font-weight: bold;
       border: 1px solid yellow;
       border-radius: 4px;
       padding: 10px 20px;
       cursor: pointer;
-      background-color: #FFF;
+      background-color: #5E8F87;
+    }
+    .centered-link {
+      text-align: center;
+    }
+    .centered-link a {
+      color: #5E8F87;
+      text-decoration: none;
+      font-weight: bold;
+      position: relative;
+      top: 15px;
     }
   </style>
 </head>
@@ -109,14 +120,12 @@
     <h2>Entrar</h2>
     <div class="line"></div>
     <form>
-        <input type="email" class="input" name="username" placeholder="Nome...">
-        <input type="password" class="input" name="username" placeholder="E-mail...">
+        <input type="email" class="input" name="username" placeholder="E-mail...">
+        <input type="password" class="input" name="username" placeholder="Senha...">
         <input type="submit" class="buttonRegister" value="Entrar">
-    </form>
-    <div class="footer">
-      <span class="footer-message">Ainda não tem cadastro?</span>
-      <button class="footer-button">Cadastra-se</button>
-    </div>
-  </div>
+    </form>    
+  <p class="centered-link">
+    <a href="URL_DA_SUA_CONTA">Quero me Cadastrar</a>
+  </p>
 </body>
 </html>
