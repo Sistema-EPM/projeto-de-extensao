@@ -1,0 +1,14 @@
+<%= nav_bar fixed: :top, brand: "EPM" do %>
+  <%= menu_group do %>
+    <%= menu_item "Início", root_path %>
+    <%= menu_item "Alunos", students_path %>
+    <%= menu_item "Organizações", organizations_path %>
+    <%= menu_item "Sair" %>
+  <% end %>
+  <%# <% if current_user %>
+  <%# <% else %>
+  <%= menu_group pull: :right do %>
+    <%= menu_item "Entrar" %>
+  <% end %>
+  <%# <% end %>
+<% end %>

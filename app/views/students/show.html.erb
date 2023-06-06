@@ -1,6 +1,25 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @student %>
+<p>
+  <strong>Projetos:</strong>
+  <% @projects_by_student.each do |project| %>
+    <p>
+      <strong>Nome:</strong>
+      <%= project.name %>
+    </p>
+
+    <p>
+      <strong>Descrição:</strong>
+      <%= project.description %>
+    </p>
+
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= project.reports.sum(:reported_effort) %>
+    </p>
+  <% end %>
+</p>
 
 <div>
   <%= link_to "Edit this student", edit_student_path(@student) %> |

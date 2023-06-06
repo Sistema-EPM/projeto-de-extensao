@@ -1,13 +1,7 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Projeto</h1>
-
 <div id="projects">
-  <%= form_tag('/search_project', method: 'get') do %>
-    <%= text_field_tag :search, params[:search], placeholder: 'Busque um projeto pelo nome' %>
-    <%= submit_tag 'Search' %>
-  <% end %>
-
+  <%= render partial: "shared/pages_index" %>
   <% @projects.each do |project| %>
     <%= render project %>
     <p>

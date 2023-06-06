@@ -10,8 +10,20 @@
   </p>
 
   <p>
-    <strong>Password:</strong>
-    <%= student.password %>
+    <strong>Status:</strong>
+    <%= student.status ? "Ativo" : "Evadido" %>
   </p>
+
+  <% if student.reports.exists? %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= student.reports.sum(:reported_effort) ? student.reports.sum(:reported_effort) : "0" %>
+    </p>
+  <% else %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= "0.0" %>
+    </p>
+  <% end %>
 
 </div>

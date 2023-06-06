@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
+    @context = "Projetos"
     @projects = Project.all
   end
 
