@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :users
   resources :archives
   resources :reports
   resources :projects
@@ -8,14 +9,16 @@ Rails.application.routes.draw do
   resources :ods_projects
   resources :organizations
   resources :courses
-  resources :responsibles
+  resources :responsibles, only: [:new, :create]
   resources :login
   resources :register
 
-  root to: "projects#index"
+  root to: "organizations#new"
   get '/search_project', to: 'projects#search_project', as: :search_project
   get '/search_student', to: 'students#search_student',  as: :search_student
   get '/show_inactive_students', to: 'students#show_inactive_students', as: :inactive_students
+  get '/register', to: 'responsibles#new'
+  post '/register', to: 'responsibles#create'
 
   get "/sw.js", to: redirect('/404.html')
 
