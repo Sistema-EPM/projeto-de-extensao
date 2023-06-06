@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :organizations
   resources :courses
   resources :responsibles
+  resources :login
   resources :register
 
   root to: "projects#index"

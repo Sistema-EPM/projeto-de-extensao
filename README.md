@@ -14,4 +14,4 @@ Iniciando a aplicação:
 * Abra o bash da aplicação: `make bash`;
 * Abra o rails c da aplicação: `make rails`;
 * Crie o banco de dados: `rails db:create`;
-* Abra a aplicação na web: `localhost:3000`..
+* Abra a aplicação na web: `localhost:3000`...
