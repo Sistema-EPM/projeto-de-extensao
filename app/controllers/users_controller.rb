@@ -72,7 +72,7 @@ class UsersController < ApplicationController
     @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%")
       .select(:name, :email, :status)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
-        FROM reports r WHERE r.student_id = students.id) AS reported_hours")
+        FROM reports r WHERE r.user_id = users.id) AS reported_hours")
 
     @context = @students_by_name.present? ? "Resultados da busca" : "Nenhum aluno encontrado"
   end
