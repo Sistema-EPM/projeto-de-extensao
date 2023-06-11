@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :users
+  devise_for :admins
+  devise_for :users
+  resources :admins
   resources :archives
   resources :reports
   resources :projects
@@ -12,7 +14,7 @@ Rails.application.routes.draw do
   resources :courses
   resources :responsibles, only: [:new, :create]
   resources :login
-  resources :register
+  # resources :register
 
   root to: "organizations#new"
 
@@ -20,8 +22,8 @@ Rails.application.routes.draw do
   get '/search_project', to: 'projects#search_project', as: :search_project
 
   # Registro
-  get '/register', to: 'responsibles#new'
-  post '/register', to: 'responsibles#create'
+  get '/register', to: 'register#new'
+  post '/register', to: 'register#create'
 
   # Alunos
   resources :users do

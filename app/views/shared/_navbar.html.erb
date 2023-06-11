@@ -7,7 +7,13 @@
   <%# <% if current_user %>
   <%# <% else %>
   <%= menu_group pull: :right do %>
-    <%= menu_item "Sair" %>
+    <% if user_signed_in? %>
+      <%= menu_item "Sair", destroy_user_session_path, method: :delete %>
+    <% elsif admin_signed_in? %>
+      <%= menu_item "Sair", destroy_admin_session_path, method: :delete %>
+    <% else %>
+      <%= menu_item "Entrar", new_admin_session_path %>
+    <% end %>
   <% end %>
   <%# <% end %>
 <% end %>
