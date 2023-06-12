@@ -7,6 +7,7 @@ ruby "3.0.6"
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 
 gem 'bootstrap', '~> 5.2', '>= 5.2.3'
+
 gem 'twitter-bootstrap-rails'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
