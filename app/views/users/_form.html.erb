@@ -12,7 +12,7 @@
   <% end %>
 
   <div>
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :nome, style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
@@ -22,18 +22,16 @@
   </div>
 
   <div>
-    <%= form.label :password, style: "display: block" %>
-    <%= form.text_field :password %>
+    <%= form.label :senha, style: "display: block" %>
+    <%= form.password_field :password %>
   </div>
 
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.check_box :status %>
-  </div>
+  <div class="d-flex justify-content-start align-items-center ml-3 remember-login">
+    <%= form.radio_button :is_responsible, 'true' %>
+    <%= form.label :is_responsible, 'Responsável' %>
 
-  <div>
-    <%= form.label :organization_id, style: "display: block" %>
-    <%= form.text_field :organization_id %>
+    <%= form.radio_button :is_responsible, 'false' %>
+    <%= form.label :is_responsible, 'Aluno' %>
   </div>
 
   <div>

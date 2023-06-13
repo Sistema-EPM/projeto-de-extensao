@@ -24,12 +24,15 @@ class OrganizationsController < ApplicationController
     @organization = Organization.new(organization_params)
 
     respond_to do |format|
-      if @organization.save
-        format.html { redirect_to organization_url(@organization), notice: "Organization was successfully created." }
-        format.json { render :show, status: :created, location: @organization }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
+      if current_admin.present?
+        @organization.admin_id = current_admin.id
+        if @organization.save
+          format.html { redirect_to organization_url(@organization), notice: "Organization was successfully created." }
+          format.json { render :show, status: :created, location: @organization }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @organization.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -65,6 +68,6 @@ class OrganizationsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def organization_params
-      params.require(:organization).permit(:name)
+      params.require(:organization).permit(:name, :admin_id)
     end
 end
