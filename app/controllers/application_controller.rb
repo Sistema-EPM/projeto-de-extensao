@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def set_organization
+    current_admin.present? ? Organization.where(admin_id: current_admin.id).first : current_user.organization
+  end
+
   protected
 
   def configure_permitted_parameters

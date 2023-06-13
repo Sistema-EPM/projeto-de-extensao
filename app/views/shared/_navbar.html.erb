@@ -1,9 +1,8 @@
-<% if user_signed_in? || admin_signed_in? %>
-  <%= nav_bar fixed: :top, brand: "EPM" do %>
+<% if (user_signed_in? || admin_signed_in?) && (Organization.where(admin_id: current_admin.id).exists? || current_user.try(:organization).present?) %>
+  <%= nav_bar fixed: :top, brand: current_user.present? ? current_user.organization.name : Organization.where(admin_id: current_admin.id).first.name do %>
     <%= menu_group do %>
-      <%= menu_item "Início", projects_path %>
+      <%= menu_item "Projetos", projects_path %>
       <%= menu_item "Alunos", users_path %>
-      <%= menu_item "Organizações", organizations_path %>
     <% end %>
     <%# <% if current_user %>
     <%# <% else %>

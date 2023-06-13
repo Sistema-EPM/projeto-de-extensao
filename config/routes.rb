@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admins
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { registrations: 'users' }
   resources :archives
   resources :reports
   resources :projects
@@ -15,6 +15,7 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     root to: 'devise/sessions#new'
+    get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
   devise_scope :admin do
