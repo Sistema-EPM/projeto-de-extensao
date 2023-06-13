@@ -27,7 +27,7 @@ class OrganizationsController < ApplicationController
       if current_admin.present?
         @organization.admin_id = current_admin.id
         if @organization.save
-          format.html { redirect_to organization_url(@organization), notice: "Organization was successfully created." }
+          format.html { redirect_to projects_path, notice: "Organization was successfully created." }
           format.json { render :show, status: :created, location: @organization }
         else
           format.html { render :new, status: :unprocessable_entity }
