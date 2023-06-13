@@ -33,6 +33,8 @@ Rails.application.routes.draw do
   resources :users do
     delete :destroy_selected, on: :collection
   end
+
+  get '/access_denied', to: 'application#access_denied', as: 'access_denied'
   
   get '/search_student', to: 'users#search_student',  as: :search_student
   get '/show_inactive_students', to: 'users#show_inactive_students', as: :inactive_students
