@@ -8,7 +8,7 @@
         <%= render partial: "table" %>
 
         <tbody>
-          <% @users&.each do |student| %>
+          <% @students&.each do |student| %>
             <tr id="student-<%= student.id %>" data-student-id="<%= student.id %>">
               <td style="text-align: center">
                 <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>

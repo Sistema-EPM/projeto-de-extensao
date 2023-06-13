@@ -7,8 +7,9 @@ ruby "3.0.6"
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 
 gem 'bootstrap', '~> 5.2', '>= 5.2.3'
-
 gem 'twitter-bootstrap-rails'
+
+gem 'devise'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -30,8 +31,6 @@ gem "stimulus-rails"
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem "jbuilder"
-
-gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
@@ -56,6 +55,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "byebug", "11.1.3", platform: :mri
 end
 
 group :development do

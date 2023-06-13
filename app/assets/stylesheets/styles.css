@@ -16,3 +16,104 @@
 .row-link:active {
   background-color: gray;
 }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+.box-cadastro {
+  position: relative;
+  width: 345px;
+  height: 390px;
+  top: 75px;
+  background: #FFFFFF;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #5E8F87;
+}
+
+.input {
+  display: flex;
+  width: 75%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-register {
+  position: relative;
+  width: 345px;
+  height: auto;
+  margin: 0 auto;
+  padding: 45px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-top: 113px;
+}
+
+.buttonRegister {
+  display: block;
+  margin: 0 auto;
+  width: 40%;
+  padding: 10px;
+  background-color: #5E8F87;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 35px;
+}
+
+.line {
+  position: relative;
+  border: 1px solid #5E8F87;
+  margin-bottom: 30px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+buttonRegister :hover {
+  background-color: #516a66;
+}
+
+.minimum-password-length {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  row-gap: 1vh;
+}
+
+.render-links {
+  text-decoration: none;
+}
+
+.remember-login {
+  width: 75%;
+  margin-left: auto;
+  margin-right: auto;
+}

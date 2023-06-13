@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (selectedIds.length === 1) {
       const studentId = selectedIds[0];
-      window.location.href = `/students/${studentId}/edit`;
+      window.location.href = `/users/${studentId}/edit`;
     } else {
       alert('Por favor, selecione um único aluno para editar.');
     }

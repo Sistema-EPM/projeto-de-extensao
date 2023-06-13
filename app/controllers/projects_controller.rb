@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   # GET /projects or /projects.json
   def index
     @context = "Projetos"
-    @projects = Project.all
+    @projects = Project.all.where(organization_id: set_organization)
   end
 
   # GET /projects/1 or /projects/1.json
