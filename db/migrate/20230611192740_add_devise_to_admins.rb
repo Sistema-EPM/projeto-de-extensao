@@ -2,13 +2,15 @@
 
 class AddDeviseToAdmins < ActiveRecord::Migration[7.0]
   def self.up
+    remove_column :admins, :name if column_exists?(:admins, :name)
+    remove_column :admins, :organization_id if column_exists?(:admins, :organization_id)
+
     change_table :admins do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
       t.string :name
-      t.references :organization, null: false, foreign_key: true
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at

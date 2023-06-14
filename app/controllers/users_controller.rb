@@ -23,10 +23,10 @@ class UsersController < ApplicationController
 
   # POST /students or /students.json
   def create
-    unless current_user.try(:is_responsible?)
+    if current_user.present? && !current_user.is_responsible?
       redirect_to access_denied_path
     else
-      organization = current_user.organization || Organization.where(admin_id: current_admin.id).first
+      organization = current_user.try(:organization) || Organization.where(admin_id: current_admin.id).first
       @student = User.new(user_params)
       @student.status = 1
       @student.organization = organization
