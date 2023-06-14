@@ -3,8 +3,13 @@ class UsersController < ApplicationController
 
   # GET /students or /students.json
   def index
-    @context = "Alunos"
-    @students = User.all.where(status: 1, is_responsible: false, organization_id: set_organization)
+    if has_permission?
+      @context = "Alunos"
+      @students = User.all.where(status: 1, is_responsible: false, organization_id: set_organization)
+    elsif user_signed_in?
+      @context = "Meus dados"
+      @students = User.where(id: current_user.id, status: 1)
+    end
   end
 
   # GET /students/1 or /students/1.json
@@ -23,9 +28,7 @@ class UsersController < ApplicationController
 
   # POST /students or /students.json
   def create
-    if current_user.present? && !current_user.is_responsible?
-      redirect_to access_denied_path
-    else
+    if has_permission?
       organization = current_user.try(:organization) || Organization.where(admin_id: current_admin.id).first
       @student = User.new(user_params)
       @student.status = 1
@@ -40,18 +43,22 @@ class UsersController < ApplicationController
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # PATCH/PUT /students/1 or /students/1.json
   def update
-    respond_to do |format|
-      if @student.update(user_params)
-        format.html { redirect_to user_url(@student), notice: "Student was successfully updated." }
-        format.json { render :show, status: :ok, location: @student }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
+    if has_permission?
+      respond_to do |format|
+        if @student.update(user_params)
+          format.html { redirect_to user_url(@student), notice: "Student was successfully updated." }
+          format.json { render :show, status: :ok, location: @student }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        end
       end
     end
   end

@@ -3,6 +3,9 @@
     <%= menu_group do %>
       <%= menu_item "Projetos", projects_path %>
       <%= menu_item "Alunos", users_path %>
+      <% if admin_signed_in? %>
+        <%= menu_item "Organização", organizations_path %>
+      <% end %>
     <% end %>
     <%# <% if current_user %>
     <%# <% else %>

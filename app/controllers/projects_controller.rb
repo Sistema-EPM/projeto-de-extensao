@@ -3,8 +3,13 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    @context = "Projetos"
-    @projects = Project.all.where(organization_id: set_organization)
+    if has_permission?
+      @context = "Projetos"
+      @projects = Project.all.where(organization_id: set_organization)
+    elsif user_signed_in?
+      @context = "Meus projetos"
+      @projects = Project.joins(:reports, :users).where(users: { id: current_user.id })
+    end
   end
 
   # GET /projects/1 or /projects/1.json
@@ -13,7 +18,9 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    @project = Project.new
+    if has_permission?
+      @project = Project.new
+    end
   end
 
   # GET /projects/1/edit
@@ -22,39 +29,45 @@ class ProjectsController < ApplicationController
 
   # POST /projects or /projects.json
   def create
-    @project = Project.new(project_params)
+    if has_permission?
+      @project = Project.new(project_params)
 
-    respond_to do |format|
-      if @project.save
-        format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
-        format.json { render :show, status: :created, location: @project }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @project.save
+          format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
+          format.json { render :show, status: :created, location: @project }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   # PATCH/PUT /projects/1 or /projects/1.json
   def update
-    respond_to do |format|
-      if @project.update(project_params)
-        format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
-        format.json { render :show, status: :ok, location: @project }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
+    if has_permission?
+      respond_to do |format|
+        if @project.update(project_params)
+          format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
+          format.json { render :show, status: :ok, location: @project }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @project.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
 
   # DELETE /projects/1 or /projects/1.json
   def destroy
-    @project.destroy
+    if has_permission?
+      @project.destroy
 
-    respond_to do |format|
-      format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
+        format.json { head :no_content }
+      end
     end
   end
 
