@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :ods_projects
   resources :organizations
   resources :courses
+  resources :responsibles
   resources :login
 
   devise_scope :user do
