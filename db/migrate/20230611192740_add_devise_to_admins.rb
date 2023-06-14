@@ -7,6 +7,8 @@ class AddDeviseToAdmins < ActiveRecord::Migration[7.0]
       t.string :email,              null: false, default: ""
       t.string :encrypted_password, null: false, default: ""
 
+      t.string :name
+      t.references :organization, null: false, foreign_key: true
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at
