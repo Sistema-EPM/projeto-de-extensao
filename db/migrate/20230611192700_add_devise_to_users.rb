@@ -2,6 +2,10 @@
 
 class AddDeviseToUsers < ActiveRecord::Migration[7.0]
   def self.up
+    remove_column :users, :name if column_exists?(:users, :name)
+    remove_column :users, :status if column_exists?(:users, :status)
+    remove_column :users, :organization_id if column_exists?(:users, :organization_id)
+
     change_table :users do |t|
       ## Database authenticatable
       t.string :email,              null: false, default: ""
