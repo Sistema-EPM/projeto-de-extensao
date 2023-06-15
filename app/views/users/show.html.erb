@@ -3,8 +3,10 @@
 <%= render @student %>
 
 <div>
-  <%= link_to "Edit this user", edit_user_path(@student) %> |
-  <%= link_to "Back to users", users_path %>
+  <%= link_to "Editar", edit_user_path(@student) %> |
+  <%= link_to "Voltar", users_path %>
 
-  <%= button_to "Destroy this user", @student, method: :delete %>
+  <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+    <%= button_to "Destroy this user", @student, method: :delete %>
+  <% end %>
 </div>

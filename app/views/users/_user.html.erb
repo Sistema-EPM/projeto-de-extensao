@@ -1,6 +1,6 @@
 <div id="<%= dom_id user %>">
   <p>
-    <strong>Name:</strong>
+    <strong>Nome:</strong>
     <%= user.name %>
   </p>
 
@@ -10,18 +10,13 @@
   </p>
 
   <p>
-    <strong>Password:</strong>
-    <%= user.password %>
-  </p>
-
-  <p>
     <strong>Status:</strong>
-    <%= user.status %>
+    <%= user.status ? "Ativo" : "Evadido" %>
   </p>
 
   <p>
-    <strong>Organization:</strong>
-    <%= user.organization_id %>
+    <strong>Organização:</strong>
+    <%= user.organization.name %>
   </p>
 
 </div>

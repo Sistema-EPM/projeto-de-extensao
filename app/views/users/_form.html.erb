@@ -26,15 +26,17 @@
     <%= form.password_field :password %>
   </div>
 
-  <div class="d-flex justify-content-start align-items-center ml-3 remember-login">
-    <%= form.radio_button :is_responsible, 'true' %>
-    <%= form.label :is_responsible, 'Responsável' %>
+  <% if admin_signed_in? || current_user.try(:is_responsible) %>
+    <div class="d-flex justify-content-start align-items-center ml-3 remember-login">
+      <%= form.radio_button :is_responsible, 'true' %>
+      <%= form.label :is_responsible, 'Responsável' %>
 
-    <%= form.radio_button :is_responsible, 'false' %>
-    <%= form.label :is_responsible, 'Aluno' %>
-  </div>
+      <%= form.radio_button :is_responsible, 'false' %>
+      <%= form.label :is_responsible, 'Aluno' %>
+    </div>
+  <% end %>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit "Salvar" %>
   </div>
 <% end %>
