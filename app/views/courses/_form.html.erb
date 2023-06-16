@@ -17,8 +17,12 @@
   </div>
 
   <div>
-    <%= form.label :responsible_id, style: "display: block" %>
-    <%= form.text_field :responsible_id %>
+    <%= form.label :user_id, "Usuário", style: "display: block" %>
+    <% if @users.present? %>
+      <%= form.collection_select :user_id, @users, :id, :name %>
+    <% else %>
+      <p>Não há usuários cadastrados</p>
+    <% end %>
   </div>
 
   <div>
