@@ -1,0 +1,37 @@
+<p style="color: green"><%= notice %></p>
+
+<div id="responsibles">
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0">
+    <%= form_tag(destroy_selected_users_path, method: :delete, id: "delete-form") do %>
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table_responsible" %>
+
+        <tbody>
+          <% @responsibles&.each do |responsible| %>
+            <tr id="responsible-<%= responsible.id %>" data-responsible-id="<%= responsible.id %>">
+              <td style="text-align: center">
+                <%= check_box_tag 'selected_ids[]', responsible.id, false, class: 'responsible-checkbox' %>
+              </td>
+              <td><%= link_to responsible.name, responsible, class: "row-link" %></td>
+              <td><%= responsible.email %></td>
+              <td><%= responsible.courses.first ? responsible.courses.first : "Nenhum curso vinculado" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if admin_signed_in? %>
+        <div style="display: flex;">
+          <div style="margin-right: auto">
+            <%= link_to "Novo", responsibles_new_path, class: "btn btn-primary" %>
+            <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+            <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<%= javascript_include_tag 'students' %>

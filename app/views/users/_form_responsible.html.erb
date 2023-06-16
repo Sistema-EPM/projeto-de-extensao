@@ -1,4 +1,4 @@
-<%= form_with(model: user) do |form| %>
+<%= form_with(model: user, url: create_responsible_users_path) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
@@ -12,7 +12,7 @@
   <% end %>
 
   <div>
-    <%= form.label :nome, style: "display: block" %>
+    <%= form.label :name, "Nome", style: "display: block" %>
     <%= form.text_field :name %>
   </div>
 
@@ -22,19 +22,8 @@
   </div>
 
   <div>
-    <%= form.label :senha, style: "display: block" %>
+    <%= form.label :password, "Senha", style: "display: block" %>
     <%= form.password_field :password %>
-  </div>
-
-
-
-  <div>
-    <%= form.label :classroom_id, "Turma", style: "display: block" %>
-    <% if @classrooms.present? %>
-      <%= form.collection_select :classroom_id, @classrooms, :id, :name %>
-    <% else %>
-      <p>Não há turmas cadastradas</p>
-    <% end %>
   </div>
 
   <div>

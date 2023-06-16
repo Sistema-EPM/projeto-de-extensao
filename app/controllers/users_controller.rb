@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update ]
+  before_action :set_responsible, only: %i[ show_responsible edit_responsible update_responsible ]
 
   # GET /students or /students.json
   def index
@@ -12,18 +13,38 @@ class UsersController < ApplicationController
     end
   end
 
+  def index_responsibles
+    if admin_signed_in?
+      @context = "Coordenadores"
+      @responsibles = User.all.where(status: 1, is_responsible: true, organization_id: set_organization)
+    end
+  end
+
   # GET /students/1 or /students/1.json
   def show
-    @projects_by_student = @student.projects.includes(:reports)
+    # @projects_by_student = @student.projects.includes(:reports)
+    @student = User.last
+  end
+
+  def show_responsible
   end
 
   # GET /students/new
   def new
     @user = User.new
+    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+  end
+
+  def new_responsible
+    @responsible = User.new
   end
 
   # GET /students/1/edit
   def edit
+    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+  end
+
+  def edit_responsible
   end
 
   # POST /students or /students.json
@@ -33,6 +54,7 @@ class UsersController < ApplicationController
       @student = User.new(user_params)
       @student.status = 1
       @student.organization = organization
+      @student.is_responsible = false
 
       respond_to do |format|
         if @student.save
@@ -48,8 +70,44 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_responsible
+    if admin_signed_in?
+      organization = Organization.where(admin_id: current_admin.id).first
+      @responsible = User.new(responsible_params)
+      @responsible.status = 1
+      @responsible.organization = organization
+      @responsible.is_responsible = true
+
+      respond_to do |format|
+        if @responsible.save
+          format.html { redirect_to responsibles_path, notice: "Coordenador criado com sucesso." }
+          format.json { render :show_responsible, status: :created, location: @responsible }
+        else
+          format.html { render :new_responsible, status: :unprocessable_entity }
+          format.json { render json: @responsible.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      redirect_to access_denied_path
+    end
+  end
+
   # PATCH/PUT /students/1 or /students/1.json
   def update
+    if has_permission?
+      respond_to do |format|
+        if @student.update(user_params)
+          format.html { redirect_to user_url(@student), notice: "Student was successfully updated." }
+          format.json { render :show, status: :ok, location: @student }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+  end
+
+  def update_responsible
     if has_permission?
       respond_to do |format|
         if @student.update(user_params)
@@ -98,16 +156,27 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-    @student = User.find_by(id: params[:id])
-  
-    unless @student
-      redirect_to users_url, alert: "Aluno não encontrado."
+      @student = User.find_by(id: params[:id])
+    
+      unless @student
+        redirect_to users_url, alert: "Aluno não encontrado."
+      end
     end
-  end
-  
+
+    def set_responsible
+      @responsible = User.find_by(id: params[:id])
+    
+      unless @responsible
+        redirect_to users_url, alert: "Coordenador não encontrado."
+      end
+    end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :is_responsible)
+      params.require(:user).permit(:name, :email, :password, :classroom_id)
+    end
+
+    def responsible_params
+      params.require(:user).permit(:name, :email, :password)
     end
 end
