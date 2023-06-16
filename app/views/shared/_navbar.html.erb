@@ -1,6 +1,6 @@
 <% if (user_signed_in? || admin_signed_in?) && (Organization.where(admin_id: current_admin.try(:id)).exists? || current_user.try(:organization).present?) %>
   <%= nav_bar fixed: :top do %>
-    <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+    <% if admin_signed_in? %>
       <%= link_to(organizations_path, class: "navbar-brand") do %>
         <%= current_user.present? ? current_user.organization.name : Organization.where(admin_id: current_admin.id).first.name %>
       <% end %>
@@ -15,8 +15,9 @@
       <% if admin_signed_in? %>
         <%= menu_item "Turmas", classrooms_path %>
         <%= menu_item "Cursos", courses_path %>
+      <% elsif !current_user.is_responsible %>
+        <%= menu_item "Reportes", reports_path %>
       <% end %>
-      <%= menu_item "Reportes", reports_path %>
     <% end %>
     <%= menu_group pull: :right do %>
       <% if user_signed_in? %>
