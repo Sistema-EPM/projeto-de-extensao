@@ -3,12 +3,15 @@ class ProjectsController < ApplicationController
 
   # GET /projects or /projects.json
   def index
-    if has_permission?
+    if admin_signed_in?
       @context = "Projetos"
       @projects = Project.all.where(organization_id: set_organization)
+    elsif has_permission?
+      @context = "Projetos"
+      @projects = Project.joins(classroom: :course).where(courses: { user_id: current_user.id })
     elsif user_signed_in?
       @context = "Meus projetos"
-      @projects = Project.joins(:reports, :users).where(users: { id: current_user.id })
+      @projects = Project.includes(:users, :reports).joins(:assignments).where(users: { id: current_user.id })
     end
   end
 
@@ -77,6 +80,10 @@ class ProjectsController < ApplicationController
       .select(:name, :description, :competency, :status)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
+  end
+
+  def show_students_in_project
+    @students_in_project = User.joins(:assignments).where(assignments: { project_id: params[:id] })
   end
 
   private
