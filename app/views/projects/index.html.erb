@@ -10,6 +10,6 @@
   <% end %>
 </div>
 
-<% if (admin_signed_in? || current_user.try(:is_responsible) ) %>
+<% if (admin_signed_in? || current_user.try(:is_responsible)) %>
   <%= link_to "New project", new_project_path %>
 <% end %>
