@@ -12,6 +12,11 @@
   <% end %>
 
   <div>
+    <%= form.label :name, "Nome", style: "display: block" %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div>
     <%= form.label :start_date, style: "display: block" %>
     <%= form.date_field :start_date %>
   </div>

@@ -1,5 +1,10 @@
 <div id="<%= dom_id classroom %>">
   <p>
+    <strong>Turma:</strong>
+    <%= classroom.name %>
+  </p>
+
+  <p>
     <strong>Start date:</strong>
     <%= classroom.start_date.strftime('%d/%m/%Y') %>
   </p>
