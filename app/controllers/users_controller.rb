@@ -82,7 +82,7 @@ class UsersController < ApplicationController
 
   def search_student
     @name = params[:search]
-    @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false)
+    @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
       .select(:name, :email, :status)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.user_id = users.id) AS reported_hours")
