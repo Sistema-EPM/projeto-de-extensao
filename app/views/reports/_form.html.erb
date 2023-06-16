@@ -12,31 +12,20 @@
   <% end %>
 
   <div>
-    <%= form.label :reported_effort, style: "display: block" %>
-    <%= form.text_field :reported_effort %>
+    <%= form.number_field :reported_effort, placeholder: 'Horas reportadas...' %>
   </div>
 
   <div>
-    <%= form.label :reported_date, style: "display: block" %>
+    <%= form.label :reported_date, "Data do reporte", style: "display: block" %>
     <%= form.date_field :reported_date %>
   </div>
 
   <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.check_box :status %>
+    <%= form.label :project_id, "Projeto", style: "display: block" %>
+    <%= form.collection_select :project_id, @projects, :id, :name %>
   </div>
 
   <div>
-    <%= form.label :project_id, style: "display: block" %>
-    <%= form.text_field :project_id %>
-  </div>
-
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "Salvar" %>
   </div>
 <% end %>

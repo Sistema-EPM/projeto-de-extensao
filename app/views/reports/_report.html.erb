@@ -1,11 +1,11 @@
 <div id="<%= dom_id report %>">
   <p>
-    <strong>Reported effort:</strong>
+    <strong>Horas reportadas:</strong>
     <%= report.reported_effort %>
   </p>
 
   <p>
-    <strong>Reported date:</strong>
+    <strong>Data do reporte:</strong>
     <%= report.reported_date %>
   </p>
 
@@ -15,13 +15,13 @@
   </p>
 
   <p>
-    <strong>Project:</strong>
-    <%= report.project_id %>
+    <strong>Projeto:</strong>
+    <%= report.project.name %>
   </p>
 
   <p>
-    <strong>Student:</strong>
-    <%= report.student_id %>
+    <strong>Aluno:</strong>
+    <%= report.user.name %>
   </p>
 
 </div>

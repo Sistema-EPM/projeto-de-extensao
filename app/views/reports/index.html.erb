@@ -1,14 +1,16 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Reports</h1>
+<h1>Reportes</h1>
 
 <div id="reports">
   <% @reports.each do |report| %>
     <%= render report %>
     <p>
-      <%= link_to "Show this report", report %>
+      <%= link_to "Mostrar", report %>
     </p>
   <% end %>
 </div>
 
-<%= link_to "New report", new_report_path %>
+<% if user_signed_in? && !current_user.is_responsible %>
+  <%= link_to "Novo", new_report_path %>
+<% end %>
