@@ -32,7 +32,11 @@ class UsersController < ApplicationController
   # GET /students/new
   def new
     @user = User.new
-    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    if admin_signed_in?
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    elsif user_signed_in? && current_user.is_responsible
+      @classrooms = Classroom.joins(course: :user).where(courses: { user_id: current_user.id })
+    end
   end
 
   def new_responsible
