@@ -13,8 +13,8 @@ class AssignmentsController < ApplicationController
   # GET /assignments/new
   def new
     if has_permission?
-      @project = Project.find(params[:project_id])
       @assignment = Assignment.new
+      @projects = Project.where(organization_id: set_organization.id)
       @users = User.joins(classroom: :projects).where(organization_id: set_organization.id, is_responsible: false)
     end
   end
@@ -26,9 +26,7 @@ class AssignmentsController < ApplicationController
   # POST /assignments or /assignments.json
   def create
     if has_permission?
-      @project = Project.find(params[:assignment][:project_id])
       @assignment = Assignment.new(assignment_params)
-      @assignment.project = @project
 
       respond_to do |format|
         if @assignment.save
@@ -73,6 +71,6 @@ class AssignmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assignment_params
-      params.require(:assignment).permit(:user_id)
+      params.require(:assignment).permit(:user_id, :project_id)
     end
 end

@@ -21,8 +21,12 @@
   </div>
 
   <div>
-    <%= form.label :project_id, "Project", style: "display: block" %>
-    <%= form.select :project_id, options_for_select([[project.name, project.id]]), include_blank: true %>
+    <%= form.label :project_id, "Projeto", style: "display: block" %>
+    <% if @projects.present? %>
+      <%= form.collection_select :project_id, @projects, :id, :name %>
+    <% else %>
+      <p>Não há projetos cadastrados</p>
+    <% end %>
   </div>
 
   <div>
