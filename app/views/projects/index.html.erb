@@ -12,4 +12,5 @@
 
 <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
   <%= link_to "New project", new_project_path %>
+  <%= link_to "Vincular aluno", new_assignment_path %>
 <% end %>
