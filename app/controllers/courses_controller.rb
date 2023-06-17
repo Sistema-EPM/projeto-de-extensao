@@ -3,7 +3,7 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.all
+    @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
   end
 
   # GET /courses/1 or /courses/1.json
@@ -13,6 +13,8 @@ class CoursesController < ApplicationController
   # GET /courses/new
   def new
     @course = Course.new
+    @users = User.where(is_responsible: true, organization_id: set_organization.id)
+    @users = @users.any? ? @users : []
   end
 
   # GET /courses/1/edit
@@ -65,6 +67,6 @@ class CoursesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def course_params
-      params.require(:course).permit(:name, :responsible_id)
+      params.require(:course).permit(:name, :user_id)
     end
 end

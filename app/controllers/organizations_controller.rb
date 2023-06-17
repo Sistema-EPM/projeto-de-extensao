@@ -1,9 +1,11 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: %i[ show edit update destroy ]
+  before_action :set_local_organization, only: %i[ show edit update destroy ]
 
   # GET /organizations or /organizations.json
   def index
-    @organizations = Organization.all
+    if current_admin.present?
+      @organizations = Organization.where(id: set_organization.id)
+    end
   end
 
   # GET /organizations/1 or /organizations/1.json
@@ -62,7 +64,7 @@ class OrganizationsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_organization
+    def set_local_organization
       @organization = Organization.find(params[:id])
     end
 

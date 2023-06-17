@@ -10,9 +10,11 @@
         <tbody>
           <% @students&.each do |student| %>
             <tr id="student-<%= student.id %>" data-student-id="<%= student.id %>">
-              <td style="text-align: center">
-                <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
-              </td>
+              <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+                <td style="text-align: center">
+                  <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
+                </td>
+              <% end %>
               <td><%= link_to student.name, student, class: "row-link" %></td>
               <td><%= student.email %></td>
               <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
@@ -22,16 +24,18 @@
         </tbody>
       </table>
 
-      <div style="display: flex;">
-        <div style="margin-right: auto">
-          <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
-          <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
-          <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+      <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+        <div style="display: flex;">
+          <div style="margin-right: auto">
+            <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
+            <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+            <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+          </div>
+          <div>
+            <%= link_to 'Mostrar usuários inativos', inactive_students_path, class: 'btn btn-info' %>
+          </div>
         </div>
-        <div>
-          <%= link_to 'Mostrar usuários inativos', inactive_students_path, class: 'btn btn-info' %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

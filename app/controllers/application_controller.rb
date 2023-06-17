@@ -2,7 +2,14 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def set_organization
-    current_admin.present? ? Organization.where(admin_id: current_admin.id).first : current_user.organization
+    current_admin.present? ? Organization.where(admin_id: current_admin.id).first : current_user.try(:organization)
+  end
+
+  def has_permission?
+    (admin_signed_in? || current_user.try(:is_responsible))
+  end
+
+  def access_denied
   end
 
   protected

@@ -1,17 +1,27 @@
 <div id="<%= dom_id classroom %>">
   <p>
+    <strong>Turma:</strong>
+    <%= classroom.name %>
+  </p>
+
+  <p>
     <strong>Start date:</strong>
-    <%= classroom.start_date %>
+    <%= classroom.start_date.strftime('%d/%m/%Y') %>
   </p>
 
   <p>
     <strong>End date:</strong>
-    <%= classroom.end_date %>
+    <%= classroom.end_date.strftime('%d/%m/%Y') %>
   </p>
 
   <p>
     <strong>Status:</strong>
-    <%= classroom.status %>
+    <%= classroom.status ? "Ativa" : "Inativa" %>
+  </p>
+
+  <p>
+    <strong>Curso:</strong>
+    <%= classroom.course.name %>
   </p>
 
 </div>

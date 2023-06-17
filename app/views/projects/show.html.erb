@@ -2,9 +2,12 @@
 
 <%= render @project %>
 
-<div>
-  <%= link_to "Edit this project", edit_project_path(@project) %> |
-  <%= link_to "Back to projects", projects_path %>
+<% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+  <div>
+    <%= link_to "Edit this project", edit_project_path(@project) %> |
+    <%= link_to "Back to projects", projects_path %>
+    <%= link_to "Mostrar alunos", assignments_path %>
 
-  <%= button_to "Excluir", @project, method: :delete %>
-</div>
+    <%= button_to "Excluir", @project, method: :delete %>
+  </div>
+<% end %>

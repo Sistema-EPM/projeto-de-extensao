@@ -1,3 +1,3 @@
 class Course < ApplicationRecord
-  belongs_to :responsible
+  belongs_to :user
 end

@@ -1,8 +1,10 @@
 <thead>
   <tr>
-    <th style="width: 2vw; text-align: center" colspan="1">
-      <%= check_box_tag 'select_all', false, false, id: 'select-all-checkbox' %>
-    </th>
+    <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+      <th style="width: 2vw; text-align: center" colspan="1">
+        <%= check_box_tag 'select_all', false, false, id: 'select-all-checkbox' %>
+      </th>
+    <% end %>
     <th style="text-align: center">Nome</th>
     <th style="text-align: center">E-mail</th>
     <th style="text-align: center">Status</th>

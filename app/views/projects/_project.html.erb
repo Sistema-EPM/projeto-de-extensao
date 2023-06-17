@@ -1,11 +1,11 @@
 <div id="<%= dom_id project %>">
   <p>
-    <strong>Name:</strong>
+    <strong>Nome:</strong>
     <%= project.name %>
   </p>
 
   <p>
-    <strong>Competency:</strong>
+    <strong>Competência:</strong>
     <%= project.competency %>
   </p>
 
@@ -15,38 +15,46 @@
   </p>
 
   <p>
-    <strong>Modality:</strong>
+    <strong>Modalidade:</strong>
     <%= project.modality %>
   </p>
 
   <p>
-    <strong>Description:</strong>
+    <strong>Descrição:</strong>
     <%= project.description %>
   </p>
 
   <p>
-    <strong>Course:</strong>
-    <%= project.course_id %>
+    <strong>Turma:</strong>
+    <%= project.classroom.name %>
   </p>
 
   <p>
-    <strong>Responsible:</strong>
-    <%= project.user_id %>
+    <strong>Coordenador:</strong>
+    <%= project.user.name %>
   </p>
 
   <p>
-    <strong>Ods project:</strong>
-    <%= project.ods_project_id %>
+    <strong>Projeto ODS:</strong>
+    <%= project.ods_project.name %>
   </p>
 
-  <p>
-    <strong>Feedback:</strong>
-    <%= project.feedback_id %>
-  </p>
+  <% if project.feedback_id.present? %>
+    <p>
+      <strong>Avaliação:</strong>
+      <%= project.feedback_id %>
+    </p>
+  <% end %>
 
-  <p>
-    <strong>Organization:</strong>
-    <%= project.organization_id %>
-  </p>
-
+  <% if current_user.present? && !current_user.is_responsible %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %>
+    </p>
+  <% else %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= project.reports.sum(:reported_effort) %>
+    </p>
+  <% end %>
 </div>

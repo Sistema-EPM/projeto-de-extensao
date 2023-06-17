@@ -3,7 +3,7 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms or /classrooms.json
   def index
-    @classrooms = Classroom.all
+    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
   end
 
   # GET /classrooms/1 or /classrooms/1.json
@@ -13,6 +13,7 @@ class ClassroomsController < ApplicationController
   # GET /classrooms/new
   def new
     @classroom = Classroom.new
+    @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
   end
 
   # GET /classrooms/1/edit
@@ -65,6 +66,6 @@ class ClassroomsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def classroom_params
-      params.require(:classroom).permit(:start_date, :end_date, :status)
+      params.require(:classroom).permit(:name, :start_date, :end_date, :status, :course_id)
     end
 end
