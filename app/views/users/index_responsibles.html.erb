@@ -13,9 +13,9 @@
               <td style="text-align: center">
                 <%= check_box_tag 'selected_ids[]', responsible.id, false, class: 'responsible-checkbox' %>
               </td>
-              <td><%= link_to responsible.name, responsible, class: "row-link" %></td>
+              <td><%= link_to responsible.name, responsible_path(responsible), class: "row-link" %></td>
               <td><%= responsible.email %></td>
-              <td><%= responsible.courses.first ? responsible.courses.first : "Nenhum curso vinculado" %></td>
+              <td><%= responsible.courses.first ? responsible.courses.first.name : "Nenhum curso vinculado" %></td>
             </tr>
           <% end %>
         </tbody>
@@ -34,4 +34,4 @@
   </div>
 </div>
 
-<%= javascript_include_tag 'students' %>
+<%= javascript_include_tag 'responsibles' %>
