@@ -1,40 +1,92 @@
-<%= form_with(model: user) do |form| %>
-  <% if user.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-      <ul>
-        <% user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+<style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 380px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  button {
+    position: relative;
+    top: 15px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+  i{
+    padding-left: 10px;
+  }
+
+</style>
+
+<%= form_with model: @project, url: projects_path do |form| %>
+  <div class="formulario">
+    <div class="form-group col-md-12">
+      <h3>Novo Aluno<i class="fas fa-graduation-cap"></i></h3>
     </div>
-  <% end %>
+    <div class="form-row">
 
-  <div>
-    <%= form.label :nome, style: "display: block" %>
-    <%= form.text_field :name %>
+      <div class="form-group col-md-6">
+        <%= form.label :name, "Nome", class: "color-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :email, "E-mail", class: "color-label" %>
+        <%= form.text_field :email, class: "form-control"%>
+      </div>
+
+    </div>
+    <div class="form-row">
+  <div class="form-group col-md-6">
+    <%= form.label :password, "Senha", class: "color-label" %>
+    <%= form.text_field :password, class: "form-control", type: "password" %>
   </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
+
+      <div class="form-group col-md-6">
+        <%= form.label :user_id, "Turma", class: "color-label" %>
+        <%= form.select :user_id, options_for_select(["Análise e Desenvolvimento de Sistemas 2021/2023", "Análise e Desenvolvimento de Sistemas 2022/2024", "Análise e Desenvolvimento de Sistemas 2023/2025"]), {}, class: "form-control", placeholder: "teste" %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.submit "Cadastrar", class: "btn btn-primary" %>
+        <%= link_to "Voltar", projects_path, class: "btn btn-danger" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :senha, style: "display: block" %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="d-flex justify-content-start align-items-center ml-3 remember-login">
-    <%= form.radio_button :is_responsible, 'true' %>
-    <%= form.label :is_responsible, 'Responsável' %>
-
-    <%= form.radio_button :is_responsible, 'false' %>
-    <%= form.label :is_responsible, 'Aluno' %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>
