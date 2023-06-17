@@ -76,10 +76,21 @@ class ProjectsController < ApplicationController
 
   def search_project
     @name = params[:search]
-    @projects_by_name = Project.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(organization_id: set_organization.id)
-      .select(:name, :description, :competency, :status)
-      .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
-        FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
+    if admin_signed_in?
+      @projects_by_name = Project.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(organization_id: set_organization.id)
+        .select(:name, :description, :competency, :status)
+        .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+          FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
+    elsif has_permission?
+      @projects_by_name = Project.joins(classroom: :course).where("LOWER(projects.name) LIKE LOWER(?)", "%#{@name}%").where(organization_id: set_organization.id, courses: { user_id: current_user.id })
+        .select(:name, :description, :competency, :status)
+        .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+          FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
+    else
+      redirect_to access_denied_path
+    end
+
+    @context = @projects_by_name.present? ? "Resultados da busca" : "Nenhum projeto encontrado"
   end
 
   def show_students_in_project
