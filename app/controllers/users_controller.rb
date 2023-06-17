@@ -159,6 +159,11 @@ class UsersController < ApplicationController
     @inactive_students = User.all.where(status: 0, is_responsible: false)
   end
 
+  def reports
+    @user = User.find(params[:id])
+    @reports = @user.reports
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user

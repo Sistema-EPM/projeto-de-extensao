@@ -41,11 +41,15 @@ Rails.application.routes.draw do
     get 'responsible_new', on: :collection
     get 'responsible', on: :collection
     get 'responsibles', on: :collection
+
+    member do
+      get 'reports', to: 'users#reports'
+    end
   end  
 
-  # # Registro
-  # get '/register', to: 'register#new'
-  # post '/register', to: 'register#create'
+  # Reportes
+  patch '/approve_reports', to: 'reports#approve_reports', as: 'approve_reports'
+  patch '/reprove_reports', to: 'reports#reprove_reports', as: 'reprove_reports'
 
   # Alunos
   resources :users do
