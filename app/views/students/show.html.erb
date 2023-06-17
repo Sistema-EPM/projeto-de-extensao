@@ -1,29 +1,47 @@
+ <style>
+ 
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  </style>
+
 <p style="color: green"><%= notice %></p>
 
-<%= render @student %>
-<p>
-  <strong>Projetos:</strong>
-  <% @projects_by_student.each do |project| %>
-    <p>
-      <strong>Nome:</strong>
-      <%= project.name %>
-    </p>
+<div class= "formulario">
+  <%= render @student %>
+  <p>
+    <h3>Projetos:</h3>
+    <% @projects_by_student.each do |project| %>
+      <p>
+        <h3>Nome:</h3>
+        <%= project.description %>
+      </p>
 
-    <p>
-      <strong>Descrição:</strong>
-      <%= project.description %>
-    </p>
+      <p>
+        <h3>Descrição:</h3>
+        <%= project.description %>
+      </p>
 
-    <p>
-      <strong>Horas reportadas:</strong>
-      <%= project.reports.sum(:reported_effort) %>
-    </p>
-  <% end %>
-</p>
+      <p>
+        <h3>Horas reportadas:</h3>
+        <%= project.reports.sum(:reported_effort) %>
+      </p>
+    <% end %>
+  </p>
 
-<div>
-  <%= link_to "Edit this student", edit_student_path(@student) %> |
-  <%= link_to "Back to students", students_path %>
+  <div>
+    <%= link_to "Editar", edit_student_path(@student) %> |
+    <%= link_to "Voltar", students_path, class: "btn btn-danger" %>
 
-  <%= button_to "Destroy this student", @student, method: :delete %>
+    <%= button_to "Excluir Aluno", @student, method: :delete %>
+  </div>
 </div>
