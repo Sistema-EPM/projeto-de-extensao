@@ -66,6 +66,18 @@ class ReportsController < ApplicationController
     end
   end
 
+  def approve_reports
+    selected_ids = params[:selected_ids] || []
+    reports = Report.where(id: selected_ids)
+    reports.update_all(status: true)
+  end
+
+  def reprove_reports
+    selected_ids = params[:selected_ids] || []
+    reports = Report.where(id: selected_ids)
+    reports.update_all(status: false)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_report

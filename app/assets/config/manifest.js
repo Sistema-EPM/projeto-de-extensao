@@ -4,3 +4,4 @@
 //= link_tree ../../../vendor/javascript .js
 //= link students.js
 //= link responsibles.js
+//= link reports.js
