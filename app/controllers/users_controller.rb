@@ -4,9 +4,12 @@ class UsersController < ApplicationController
 
   # GET /students or /students.json
   def index
-    if has_permission?
+    if admin_signed_in?
       @context = "Alunos"
       @students = User.all.where(status: 1, is_responsible: false, organization_id: set_organization)
+    elsif has_permission?
+      @context = "Alunos"
+      @students = User.joins(classroom: :course).where(status: 1, is_responsible: false, organization_id: set_organization.id, courses: { user_id: current_user.id })
     elsif user_signed_in?
       @context = "Meus dados"
       @students = User.where(id: current_user.id, status: 1)
@@ -147,7 +150,7 @@ class UsersController < ApplicationController
   def search_student
     @name = params[:search]
     @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
-      .select(:name, :email, :status)
+      .select(:name, :email, :status, :classroom_id)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.user_id = users.id) AS reported_hours")
 

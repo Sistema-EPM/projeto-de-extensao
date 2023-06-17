@@ -16,6 +16,7 @@
             </td>
             <td><%= link_to student.name, class: "row-link" %></td>
             <td><%= student.email %></td>
+            <td><%= student.classroom.name %></td>
             <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
             <td style="text-align: center"><%= student.reported_hours %></td>
           </tr>
