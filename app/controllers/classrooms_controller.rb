@@ -3,7 +3,13 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms or /classrooms.json
   def index
-    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    if admin_signed_in?
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    elsif has_permission?
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id }, courses: { user_id: current_user.id })
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /classrooms/1 or /classrooms/1.json

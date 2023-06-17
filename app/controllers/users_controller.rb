@@ -149,10 +149,19 @@ class UsersController < ApplicationController
 
   def search_student
     @name = params[:search]
-    @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
+    if admin_signed_in?
+      @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
       .select(:name, :email, :status, :classroom_id)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.user_id = users.id) AS reported_hours")
+    elsif has_permission?
+      @students_by_name = User.joins(classroom: :course).where("LOWER(users.name) LIKE LOWER(?)", "%#{@name}%").where(status: 1, is_responsible: false, organization_id: set_organization.id, courses: { user_id: current_user.id })
+        .select(:name, :email, :status, :classroom_id)
+        .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+          FROM reports r WHERE r.user_id = users.id) AS reported_hours")
+    else
+      redirect_to access_denied_path
+    end
 
     @context = @students_by_name.present? ? "Resultados da busca" : "Nenhum aluno encontrado"
   end
