@@ -29,14 +29,18 @@ Rails.application.routes.draw do
   get '/responsibles', to: 'users#index_responsibles'
   get '/responsibles/new', to: 'users#new_responsible'
   post '/responsibles', to: 'users#create_responsible'
-  get '/responsibles/:id', to: 'users#show_responsible'
-  get '/responsibles/:id/edit', to: 'users#edit_responsible'
-  patch 'responsibles/:id', to: 'users#update_responsible'
+  get '/responsibles/:id', to: 'users#show_responsible', as: :responsible
+  get '/responsibles/:id/edit', to: 'users#edit_responsible', as: :edit_responsible
+  patch 'responsibles/:id', to: 'users#update_responsible', as: :responsible_registration
   put 'responsibles/:id', to: 'users#update_responsible'
   delete '/responsibles/:id', to: 'users#destroy_responsible'
 
   resources :users do
     post 'create_responsible', on: :collection
+    get 'edit_responsible', on: :collection
+    get 'responsible_new', on: :collection
+    get 'responsible', on: :collection
+    get 'responsibles', on: :collection
   end  
 
   # # Registro

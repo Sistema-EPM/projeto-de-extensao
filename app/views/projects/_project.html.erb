@@ -51,5 +51,10 @@
       <strong>Horas reportadas:</strong>
       <%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %>
     </p>
+  <% else %>
+    <p>
+      <strong>Horas reportadas:</strong>
+      <%= project.reports.sum(:reported_effort) %>
+    </p>
   <% end %>
 </div>

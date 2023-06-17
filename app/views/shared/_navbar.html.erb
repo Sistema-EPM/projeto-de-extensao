@@ -13,21 +13,21 @@
       <%= menu_item "Projetos", projects_path %>
       <%= menu_item "Alunos", users_path %>
       <% if admin_signed_in? %>
-        <%= menu_item "Turmas", classrooms_path %>
+        <%= menu_item "Coordenadores", responsibles_path %>
         <%= menu_item "Cursos", courses_path %>
+        <%= menu_item "Turmas", classrooms_path %>
       <% elsif !current_user.is_responsible %>
         <%= menu_item "Reportes", reports_path %>
+      <% else %>
+        <%= menu_item "Turmas", classrooms_path %>
       <% end %>
     <% end %>
     <%= menu_group pull: :right do %>
       <% if user_signed_in? %>
         <%= menu_item "Olá, #{current_user.name}" %>
-      <% else %>
-        <%= menu_item "Admin" %>
-      <% end %>
-      <% if user_signed_in? %>
         <%= menu_item "Sair", destroy_user_session_path, method: :delete %>
       <% elsif admin_signed_in? %>
+        <%= menu_item "Admin" %>
         <%= menu_item "Sair", destroy_admin_session_path, method: :delete %>
       <% else %>
         <%= menu_item "Entrar", new_user_session_path %>

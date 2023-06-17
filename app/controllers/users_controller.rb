@@ -10,6 +10,8 @@ class UsersController < ApplicationController
     elsif user_signed_in?
       @context = "Meus dados"
       @students = User.where(id: current_user.id, status: 1)
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -17,13 +19,13 @@ class UsersController < ApplicationController
     if admin_signed_in?
       @context = "Coordenadores"
       @responsibles = User.all.where(status: 1, is_responsible: true, organization_id: set_organization)
+    else
+      redirect_to access_denied_path
     end
   end
 
   # GET /students/1 or /students/1.json
   def show
-    # @projects_by_student = @student.projects.includes(:reports)
-    @student = User.last
   end
 
   def show_responsible
@@ -114,12 +116,12 @@ class UsersController < ApplicationController
   def update_responsible
     if has_permission?
       respond_to do |format|
-        if @student.update(user_params)
-          format.html { redirect_to user_url(@student), notice: "Student was successfully updated." }
-          format.json { render :show, status: :ok, location: @student }
+        if @responsible.update(user_params)
+          format.html { redirect_to responsible_url(@responsible), notice: "Responsible was successfully updated." }
+          format.json { render :show_responsible, status: :ok, location: @responsible }
         else
-          format.html { render :edit, status: :unprocessable_entity }
-          format.json { render json: @student.errors, status: :unprocessable_entity }
+          format.html { render :edit_responsible, status: :unprocessable_entity }
+          format.json { render json: @responsible.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -171,7 +173,7 @@ class UsersController < ApplicationController
       @responsible = User.find_by(id: params[:id])
     
       unless @responsible
-        redirect_to users_url, alert: "Coordenador não encontrado."
+        redirect_to responsibles_url, alert: "Coordenador não encontrado."
       end
     end
 
