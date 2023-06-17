@@ -37,6 +37,7 @@ class UsersController < ApplicationController
   # GET /students/new
   def new
     @user = User.new
+    @context = "Novo Aluno"
     if admin_signed_in?
       @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
     elsif user_signed_in? && current_user.is_responsible
@@ -50,6 +51,7 @@ class UsersController < ApplicationController
 
   # GET /students/1/edit
   def edit
+    @context = "Editar Aluno"
     @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
   end
 
