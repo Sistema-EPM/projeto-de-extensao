@@ -6,6 +6,8 @@ class ReportsController < ApplicationController
     if user_signed_in? && !current_user.is_responsible
       @reports = Report.joins(:user).where(users: { id: current_user.id })
       @projects = Project.includes(:users, :reports).joins(:assignments).where(users: { id: current_user.id })
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -18,6 +20,8 @@ class ReportsController < ApplicationController
     if user_signed_in? && !current_user.is_responsible
       @report = Report.new
       @projects = Project.joins(:assignments).where(assignments: { user_id: current_user.id })
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -40,42 +44,60 @@ class ReportsController < ApplicationController
           format.json { render json: @report.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # PATCH/PUT /reports/1 or /reports/1.json
   def update
-    respond_to do |format|
-      if @report.update(report_params)
-        format.html { redirect_to report_url(@report), notice: "Report was successfully updated." }
-        format.json { render :show, status: :ok, location: @report }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @report.errors, status: :unprocessable_entity }
+    if current_user.present? && !current_user.try(:is_responsible)
+      respond_to do |format|
+        if @report.update(report_params)
+          format.html { redirect_to report_url(@report), notice: "Report was successfully updated." }
+          format.json { render :show, status: :ok, location: @report }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @report.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # DELETE /reports/1 or /reports/1.json
   def destroy
-    @report.destroy
+    if has_permission?
+      @report.destroy
 
-    respond_to do |format|
-      format.html { redirect_to reports_url, notice: "Report was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to reports_url, notice: "Report was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 
   def approve_reports
-    selected_ids = params[:selected_ids] || []
-    reports = Report.where(id: selected_ids)
-    reports.update_all(status: true)
+    if has_permission?
+      selected_ids = params[:selected_ids] || []
+      reports = Report.where(id: selected_ids)
+      reports.update_all(status: true)
+    else
+      redirect_to access_denied_path
+    end
   end
 
   def reprove_reports
-    selected_ids = params[:selected_ids] || []
-    reports = Report.where(id: selected_ids)
-    reports.update_all(status: false)
+    if has_permission?
+      selected_ids = params[:selected_ids] || []
+      reports = Report.where(id: selected_ids)
+      reports.update_all(status: false)
+    else
+      redirect_to access_denied_path
+    end
   end
 
   private

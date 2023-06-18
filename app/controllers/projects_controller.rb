@@ -12,6 +12,8 @@ class ProjectsController < ApplicationController
     elsif user_signed_in?
       @context = "Meus projetos"
       @projects = Project.includes(:users, :reports).joins(:assignments).where(users: { id: current_user.id })
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -23,6 +25,8 @@ class ProjectsController < ApplicationController
   def new
     if has_permission?
       @project = Project.new
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -44,6 +48,8 @@ class ProjectsController < ApplicationController
           format.json { render json: @project.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -59,6 +65,8 @@ class ProjectsController < ApplicationController
           format.json { render json: @project.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -71,6 +79,8 @@ class ProjectsController < ApplicationController
         format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
         format.json { head :no_content }
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
