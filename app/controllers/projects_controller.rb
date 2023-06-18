@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @context = "Editar Projeto"
+    @context = "Editando Projeto"
     if admin_signed_in?
       @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
       @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })

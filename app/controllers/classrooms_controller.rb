@@ -32,7 +32,7 @@ class ClassroomsController < ApplicationController
 
   # POST /classrooms or /classrooms.json
   def create
-    if has_permisson?
+    if has_permission?
       @classroom = Classroom.new(classroom_params)
 
       respond_to do |format|

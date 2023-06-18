@@ -50,6 +50,7 @@ class UsersController < ApplicationController
   end
 
   def new_responsible
+    @context = "Novo Coordenador"
     if admin_signed_in?
       @responsible = User.new
     else
@@ -60,7 +61,7 @@ class UsersController < ApplicationController
   # GET /students/1/edit
   def edit
     if has_permission?
-      @context = "Editar Aluno"
+      @context = "Editando Aluno"
       @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
     else
       redirect_to access_denied_path
@@ -68,6 +69,7 @@ class UsersController < ApplicationController
   end
 
   def edit_responsible
+    @context = "Editando Coordenador"
   end
 
   # POST /students or /students.json
