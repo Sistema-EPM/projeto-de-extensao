@@ -23,16 +23,19 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+    @context = "Novo Projeto"
     if admin_signed_in?
       @project = Project.new
       @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
       @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
       @organization = set_organization
+      @ods_projects = OdsProject.all
     elsif has_permission?
       @project = Project.new
       @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
       @classrooms = Classroom.joins(:course).where(courses: { user_id: current_user.id })
       @organization = set_organization
+      @ods_projects = OdsProject.all
     else
       redirect_to access_denied_path
     end
@@ -40,6 +43,20 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+    @context = "Editar Projeto"
+    if admin_signed_in?
+      @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+      @organization = set_organization
+      @ods_projects = OdsProject.all
+    elsif has_permission?
+      @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
+      @classrooms = Classroom.joins(:course).where(courses: { user_id: current_user.id })
+      @organization = set_organization
+      @ods_projects = OdsProject.all
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # POST /projects or /projects.json
