@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
   const deleteSelectedBtn = document.getElementById('delete-selected-btn');
   const editButton = document.getElementById('edit-button');
@@ -25,6 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   deleteSelectedBtn.addEventListener('click', function() {
+    event.preventDefault();
+
     const selectedIds = Array.from(checkboxes)
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value);
@@ -44,7 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         deleteForm.submit();
+      } else {
+        return false;
       }
+    } else {
+      alert('Selecione pelo menos um aluno para exclusão.');
     }
   });
 

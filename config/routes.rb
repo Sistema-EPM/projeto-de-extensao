@@ -33,7 +33,7 @@ Rails.application.routes.draw do
   get '/responsibles/:id/edit', to: 'users#edit_responsible', as: :edit_responsible
   patch 'responsibles/:id', to: 'users#update_responsible', as: :responsible_registration
   put 'responsibles/:id', to: 'users#update_responsible'
-  delete '/responsibles/:id', to: 'users#destroy_responsible'
+  delete 'destroy_selected', to: 'users#destroy_responsibles', as: :destroy_selected_responsibles
 
   resources :users do
     post 'create_responsible', on: :collection

@@ -149,19 +149,43 @@ class UsersController < ApplicationController
   end
 
   # DELETE /students/1 or /students/1.json
-  def destroy_selected
-    return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
+  def destroy
+    if has_permission?
+      return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
 
-    selected_ids = params[:selected_ids]
-    if selected_ids.present?
-      User.where(id: selected_ids).destroy_all
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        User.where(id: selected_ids).destroy_all
+      else
+        @student.destroy
+      end
+
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: "Aluno excluído com sucesso." }
+        format.json { head :no_content }
+      end
     else
-      @student.destroy
+      redirect_to access_denied_path
     end
+  end
 
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: "Aluno excluído com sucesso." }
-      format.json { head :no_content }
+  def destroy_responsibles
+    if admin_signed_in?
+      return "Nenhum coordenador foi selecionado." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        User.where(id: selected_ids).destroy_all
+      else
+        @responsible.destroy
+      end
+
+      respond_to do |format|
+        format.html { redirect_to responsibles_url, notice: "Coordenador excluído com sucesso." }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 
