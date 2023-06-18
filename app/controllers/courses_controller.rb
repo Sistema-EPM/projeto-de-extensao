@@ -3,7 +3,11 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
-    @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
+    if admin_signed_in?
+      @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /courses/1 or /courses/1.json
@@ -12,9 +16,13 @@ class CoursesController < ApplicationController
 
   # GET /courses/new
   def new
-    @course = Course.new
-    @users = User.where(is_responsible: true, organization_id: set_organization.id)
-    @users = @users.any? ? @users : []
+    if admin_signed_in?
+      @course = Course.new
+      @users = User.where(is_responsible: true, organization_id: set_organization.id)
+      @users = @users.any? ? @users : []
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /courses/1/edit
@@ -23,39 +31,51 @@ class CoursesController < ApplicationController
 
   # POST /courses or /courses.json
   def create
-    @course = Course.new(course_params)
+    if admin_signed_in?
+      @course = Course.new(course_params)
 
-    respond_to do |format|
-      if @course.save
-        format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
-        format.json { render :show, status: :created, location: @course }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @course.save
+          format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
+          format.json { render :show, status: :created, location: @course }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @course.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # PATCH/PUT /courses/1 or /courses/1.json
   def update
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to course_url(@course), notice: "Course was successfully updated." }
-        format.json { render :show, status: :ok, location: @course }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
+    if admin_signed_in?
+      respond_to do |format|
+        if @course.update(course_params)
+          format.html { redirect_to course_url(@course), notice: "Course was successfully updated." }
+          format.json { render :show, status: :ok, location: @course }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @course.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
-    @course.destroy
+    if admin_signed_in?
+      @course.destroy
 
-    respond_to do |format|
-      format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 

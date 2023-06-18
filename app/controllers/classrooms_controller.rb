@@ -3,7 +3,13 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms or /classrooms.json
   def index
-    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    if admin_signed_in?
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    elsif has_permission?
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id }, courses: { user_id: current_user.id })
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /classrooms/1 or /classrooms/1.json
@@ -12,8 +18,12 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms/new
   def new
-    @classroom = Classroom.new
-    @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
+    if has_permission?
+      @classroom = Classroom.new
+      @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /classrooms/1/edit
@@ -22,39 +32,51 @@ class ClassroomsController < ApplicationController
 
   # POST /classrooms or /classrooms.json
   def create
-    @classroom = Classroom.new(classroom_params)
+    if has_permisson?
+      @classroom = Classroom.new(classroom_params)
 
-    respond_to do |format|
-      if @classroom.save
-        format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully created." }
-        format.json { render :show, status: :created, location: @classroom }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @classroom.save
+          format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully created." }
+          format.json { render :show, status: :created, location: @classroom }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # PATCH/PUT /classrooms/1 or /classrooms/1.json
   def update
-    respond_to do |format|
-      if @classroom.update(classroom_params)
-        format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully updated." }
-        format.json { render :show, status: :ok, location: @classroom }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @classroom.errors, status: :unprocessable_entity }
+    if has_permission?
+      respond_to do |format|
+        if @classroom.update(classroom_params)
+          format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully updated." }
+          format.json { render :show, status: :ok, location: @classroom }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @classroom.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # DELETE /classrooms/1 or /classrooms/1.json
   def destroy
-    @classroom.destroy
+    if has_permission?
+      @classroom.destroy
 
-    respond_to do |format|
-      format.html { redirect_to classrooms_url, notice: "Classroom was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to classrooms_url, notice: "Classroom was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 

@@ -4,9 +4,12 @@ class UsersController < ApplicationController
 
   # GET /students or /students.json
   def index
-    if has_permission?
+    if admin_signed_in?
       @context = "Alunos"
       @students = User.all.where(status: 1, is_responsible: false, organization_id: set_organization)
+    elsif has_permission?
+      @context = "Alunos"
+      @students = User.joins(classroom: :course).where(status: 1, is_responsible: false, organization_id: set_organization.id, courses: { user_id: current_user.id })
     elsif user_signed_in?
       @context = "Meus dados"
       @students = User.where(id: current_user.id, status: 1)
@@ -33,23 +36,35 @@ class UsersController < ApplicationController
 
   # GET /students/new
   def new
-    @user = User.new
-    @context = "Novo Aluno"
-    if admin_signed_in?
-      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
-    elsif user_signed_in? && current_user.is_responsible
-      @classrooms = Classroom.joins(course: :user).where(courses: { user_id: current_user.id })
+    if has_permission?
+      @user = User.new
+      @context = "Novo Aluno"
+      if admin_signed_in?
+        @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+      elsif user_signed_in? && current_user.is_responsible
+        @classrooms = Classroom.joins(course: :user).where(courses: { user_id: current_user.id })
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 
   def new_responsible
-    @responsible = User.new
+    if admin_signed_in?
+      @responsible = User.new
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /students/1/edit
   def edit
-    @context = "Editar Aluno"
-    @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    if has_permission?
+      @context = "Editar Aluno"
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+    else
+      redirect_to access_denied_path
+    end
   end
 
   def edit_responsible
@@ -112,11 +127,13 @@ class UsersController < ApplicationController
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   def update_responsible
-    if has_permission?
+    if admin_signed_in?
       respond_to do |format|
         if @responsible.update(user_params)
           format.html { redirect_to responsible_url(@responsible), notice: "Responsible was successfully updated." }
@@ -126,6 +143,8 @@ class UsersController < ApplicationController
           format.json { render json: @responsible.errors, status: :unprocessable_entity }
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -148,22 +167,39 @@ class UsersController < ApplicationController
 
   def search_student
     @name = params[:search]
-    @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
-      .select(:name, :email, :status)
+    if admin_signed_in?
+      @students_by_name = User.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(is_responsible: false, organization_id: set_organization.id)
+      .select(:name, :email, :status, :classroom_id)
       .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
         FROM reports r WHERE r.user_id = users.id) AS reported_hours")
+    elsif has_permission?
+      @students_by_name = User.joins(classroom: :course).where("LOWER(users.name) LIKE LOWER(?)", "%#{@name}%").where(status: 1, is_responsible: false, organization_id: set_organization.id, courses: { user_id: current_user.id })
+        .select(:name, :email, :status, :classroom_id)
+        .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
+          FROM reports r WHERE r.user_id = users.id) AS reported_hours")
+    else
+      redirect_to access_denied_path
+    end
 
     @context = @students_by_name.present? ? "Resultados da busca" : "Nenhum aluno encontrado"
   end
 
   def show_inactive_students
-    @context = "Alunos inativos"
-    @inactive_students = User.all.where(status: 0, is_responsible: false)
+    if has_permission?
+      @context = "Alunos inativos"
+      @inactive_students = User.all.where(status: 0, is_responsible: false)
+    else
+      redirect_to access_denied_path
+    end
   end
 
   def reports
-    @user = User.find(params[:id])
-    @reports = @user.reports
+    if has_permission?
+      @user = User.find(params[:id])
+      @reports = @user.reports
+    else
+      redirect_to access_denied_path
+    end
   end
 
   private

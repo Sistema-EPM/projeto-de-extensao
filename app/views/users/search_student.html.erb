@@ -14,8 +14,9 @@
             <td style="text-align: center">
               <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
             </td>
-            <td><%= link_to student.name, class: "row-link" %></td>
+            <td><%= student.name %></td>
             <td><%= student.email %></td>
+            <td><%= student.classroom.name %></td>
             <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
             <td style="text-align: center"><%= student.reported_hours %></td>
           </tr>

@@ -17,6 +17,7 @@
               <% end %>
               <td><%= link_to student.name, student, class: "row-link" %></td>
               <td><%= student.email %></td>
+              <td><%= student.classroom.name %></td>
               <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
               <td style="text-align: center"><%= student.reports.sum(:reported_effort) %></td>
             </tr>

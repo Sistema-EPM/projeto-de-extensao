@@ -3,8 +3,10 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations or /organizations.json
   def index
-    if current_admin.present?
+    if admin_signed_in?
       @organizations = Organization.where(id: set_organization.id)
+    else
+      redirect_to access_denied_path
     end
   end
 
@@ -14,7 +16,11 @@ class OrganizationsController < ApplicationController
 
   # GET /organizations/new
   def new
-    @organization = Organization.new
+    if admin_signed_in?
+      @organization = Organization.new
+    else
+      redirect_to access_denied_path
+    end
   end
 
   # GET /organizations/1/edit
@@ -23,42 +29,54 @@ class OrganizationsController < ApplicationController
 
   # POST /organizations or /organizations.json
   def create
-    @organization = Organization.new(organization_params)
+    if admin_signed_in?
+      @organization = Organization.new(organization_params)
 
-    respond_to do |format|
-      if current_admin.present?
-        @organization.admin_id = current_admin.id
-        if @organization.save
-          format.html { redirect_to projects_path, notice: "Organization was successfully created." }
-          format.json { render :show, status: :created, location: @organization }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @organization.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if current_admin.present?
+          @organization.admin_id = current_admin.id
+          if @organization.save
+            format.html { redirect_to projects_path, notice: "Organization was successfully created." }
+            format.json { render :show, status: :created, location: @organization }
+          else
+            format.html { render :new, status: :unprocessable_entity }
+            format.json { render json: @organization.errors, status: :unprocessable_entity }
+          end
         end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # PATCH/PUT /organizations/1 or /organizations/1.json
   def update
-    respond_to do |format|
-      if @organization.update(organization_params)
-        format.html { redirect_to organization_url(@organization), notice: "Organization was successfully updated." }
-        format.json { render :show, status: :ok, location: @organization }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @organization.errors, status: :unprocessable_entity }
+    if admin_signed_in?
+      respond_to do |format|
+        if @organization.update(organization_params)
+          format.html { redirect_to organization_url(@organization), notice: "Organization was successfully updated." }
+          format.json { render :show, status: :ok, location: @organization }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @organization.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to access_denied_path
     end
   end
 
   # DELETE /organizations/1 or /organizations/1.json
   def destroy
-    @organization.destroy
+    if admin_signed_in?
+      @organization.destroy
 
-    respond_to do |format|
-      format.html { redirect_to organizations_url, notice: "Organization was successfully destroyed." }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to organizations_url, notice: "Organization was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to access_denied_path
     end
   end
 

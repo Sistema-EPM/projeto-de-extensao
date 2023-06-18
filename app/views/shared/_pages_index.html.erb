@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="form-outline">
-  <% if admin_signed_in? %>
+  <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
     <% if controller.class.to_s === "UsersController" %>
       <%= form_tag('/search_student', method: 'get', style: "display: flex; justify-content: space-between") do %>
         <%= text_field_tag :search, params[:search], placeholder: "Busque um aluno pelo nome", class: "form-control", style: "display: inline-block; margin-right: 5px" %>
