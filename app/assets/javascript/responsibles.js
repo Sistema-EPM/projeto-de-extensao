@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   const selectAllCheckbox = document.getElementById('select-all-checkbox');
   const deleteSelectedBtn = document.getElementById('delete-selected-btn');
   const editButton = document.getElementById('edit-button');
@@ -25,12 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   deleteSelectedBtn.addEventListener('click', function() {
+    event.preventDefault();
+
     const selectedIds = Array.from(checkboxes)
       .filter(checkbox => checkbox.checked)
       .map(checkbox => checkbox.value);
 
     if (selectedIds.length > 0) {
-      const confirmDelete = confirm('Tem certeza de que deseja excluir os alunos selecionados?');
+      const confirmDelete = confirm('Tem certeza de que deseja excluir os coordenadores selecionados?');
 
       if (confirmDelete) {
         const deleteForm = document.getElementById('delete-form');
@@ -44,7 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         deleteForm.submit();
+      } else {
+        return false;
       }
+    } else {
+      alert('Selecione pelo menos um coordenador para exclusão.');
     }
   });
 
