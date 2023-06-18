@@ -1,3 +1,55 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 380px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  button {
+    position: relative;
+    top: 15px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+  i{
+    padding-left: 10px;
+  }
+
+</style>
+
 <%= form_with(model: user, url: user.persisted? ? responsible_registration_path : create_responsible_users_path) do |form| %>
   <% if user.errors.any? %>
     <div style="color: red">
@@ -11,22 +63,35 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, "Nome", style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
+  <div class="formulario">
+    <div class="form-group col-md-12">
+      <h3><%= @context %><i class="fas fa-graduation-cap"></i></h3>
+    </div>
 
-  <div>
-    <%= form.label :email, style: "display: block" %>
-    <%= form.text_field :email %>
-  </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :name, "Nome", class: "color-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :password, "Senha", style: "display: block" %>
-    <%= form.password_field :password %>
-  </div>
+      <div class="form-group col-md-6">
+        <%= form.label :email, class: "color-label" %>
+        <%= form.text_field :email, class: "form-control" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.submit "Salvar" %>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :password, "Senha", class: "color-label" %>
+        <%= form.password_field :password, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <%= form.submit "Salvar", class: "btn btn-primary" %>
+        <%= link_to "Voltar", responsibles_path, class: "btn btn-danger" %>
+      </div>
+    </div>
   </div>
 <% end %>
