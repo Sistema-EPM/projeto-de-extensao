@@ -19,7 +19,7 @@ class ReportsController < ApplicationController
   def new
     if user_signed_in? && !current_user.is_responsible
       @report = Report.new
-      @projects = Project.joins(:assignments).where(assignments: { user_id: current_user.id })
+      @projects = Project.joins(:assignments).where(status: "Em andamento", assignments: { user_id: current_user.id }).distinct
     else
       redirect_to access_denied_path
     end

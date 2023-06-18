@@ -8,4 +8,6 @@ class Project < ApplicationRecord
   has_many :reports
   has_many :users, through: :reports
   has_many :assignments
+
+  validates :status, inclusion: { in: ["Aguardando", "Em andamento", "Rejeitado", "Encerrado"] }
 end
