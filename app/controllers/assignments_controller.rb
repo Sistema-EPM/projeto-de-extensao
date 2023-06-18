@@ -15,7 +15,7 @@ class AssignmentsController < ApplicationController
     if has_permission?
       @assignment = Assignment.new
       @projects = Project.where(organization_id: set_organization.id)
-      @users = User.joins(classroom: :projects).where(organization_id: set_organization.id, is_responsible: false)
+      @users = User.joins(classroom: :projects).where(organization_id: set_organization.id, is_responsible: false).distinct
     else
       redirect_to access_denied_path
     end

@@ -1,8 +1,6 @@
 class Project < ApplicationRecord
-  # belongs_to :course
-  # belongs_to :responsible
   belongs_to :user
-  belongs_to :ods_project
+  belongs_to :ods_project, optional: true
   belongs_to :feedback, optional: true
   belongs_to :organization
   belongs_to :classroom

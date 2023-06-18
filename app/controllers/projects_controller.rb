@@ -23,8 +23,16 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    if has_permission?
+    if admin_signed_in?
       @project = Project.new
+      @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
+      @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
+      @organization = set_organization
+    elsif has_permission?
+      @project = Project.new
+      @responsibles = User.where(status: 1, is_responsible: 1, organization_id: set_organization.id)
+      @classrooms = Classroom.joins(:course).where(courses: { user_id: current_user.id })
+      @organization = set_organization
     else
       redirect_to access_denied_path
     end
@@ -115,6 +123,6 @@ class ProjectsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def project_params
-      params.permit(:name, :competency, :status, :modality, :description, :course_id, :responsible_id, :ods_project_id, :feedback_id, :organization_id)
+      params.fetch(:project, {}).permit(:name, :competency, :status, :modality, :description, :classroom_id, :user_id, :ods_project_id, :feedback_id, :organization_id)
     end
 end

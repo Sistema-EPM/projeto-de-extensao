@@ -1,0 +1,117 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 600px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  button {
+    position: relative;
+    top: 15px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+</style>
+
+<%= form_with(model: project) do |form| %>
+  <div class="formulario">
+    <div class="form-group col-md-12">
+      <h3><i class="fas fa-folder"></i> Novo Projeto</h3>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :name, "Nome", class: "color-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :competency, "Competência", class: "color-label" %>
+        <%= form.text_field :competency, class: "form-control"%>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :status, class: "color-label" %>
+        <%= form.select :status, options_for_select(["Aguardando", "Em andamento", "Rejeitado", "Encerrado"]), {}, class: "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :modality, "Modalidade", class: "color-label" %>
+        <%= form.text_field :modality, class: "form-control"%>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :classroom_id, "Turma", class: "color-label" %>
+        <% if @classrooms.present? %>
+          <%= form.collection_select :classroom_id, @classrooms, :id, :name, {}, class: "form-control" %>
+        <% else %>
+          <p>Não há cursos cadastrados</p>
+        <% end %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :ods_project_id, "Projeto ODS", class: "color-label" %>
+        <%= form.select :ods_project_id, options_for_select([1]), {}, class: "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :user_id, "Coordenador do Projeto", class: "color-label" %>
+        <% if @responsibles.present? %>
+          <%= form.collection_select :user_id, @responsibles, :id, :name, {}, class: "form-control" %>
+        <% else %>
+          <p>Não há coordenadores cadastrados</p>
+        <% end %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :organization_id, "Organização", class: "color-label" %>
+        <%= form.collection_select :organization_id, [@organization], :id, :name, { disabled: true }, class: 'form-control' %>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="form-group col-md-12">
+        <%= form.label :description, "Descrição", class: "color-label" %>
+        <%= form.text_area :description, class: "form-control", rows: 3 %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.submit "Cadastrar", class: "btn btn-primary" %>
+        <%= link_to "Voltar", projects_path, class: "btn btn-danger" %>
+      </div>
+    </div>
+  </div>
+<% end %>
