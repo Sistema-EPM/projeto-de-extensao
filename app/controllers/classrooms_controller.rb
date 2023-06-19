@@ -1,5 +1,5 @@
 class ClassroomsController < ApplicationController
-  before_action :set_classroom, only: %i[ show edit update destroy ]
+  before_action :set_classroom, only: %i[ show edit update ]
 
   # GET /classrooms or /classrooms.json
   def index
