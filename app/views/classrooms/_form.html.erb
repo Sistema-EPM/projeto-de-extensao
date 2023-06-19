@@ -1,46 +1,106 @@
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 400px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  button {
+    position: relative;
+    top: 15px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+</style>
+
 <%= form_with(model: classroom) do |form| %>
-  <% if classroom.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(classroom.errors.count, "error") %> prohibited this classroom from being saved:</h2>
+  <div class="formulario">
+    <% if classroom.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(classroom.errors.count, "error") %> prohibited this classroom from being saved:</h2>
 
-      <ul>
-        <% classroom.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :name, "Nome", style: "display: block" %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :start_date, style: "display: block" %>
-    <%= form.date_field :start_date %>
-  </div>
-
-  <div>
-    <%= form.label :end_date, style: "display: block" %>
-    <%= form.date_field :end_date %>
-  </div>
-
-  <div>
-    <%= form.label :status, style: "display: block" %>
-    <%= form.check_box :status %>
-  </div>
-
-  <div>
-    <%= form.label :course_id, "Curso", style: "display: block" %>
-    <% if @courses.present? %>
-      <%= form.collection_select :course_id, @courses, :id, :name %>
-    <% else %>
-      <p>Não há cursos cadastrados</p>
+        <ul>
+          <% classroom.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
-  </div>
 
-  <div>
-    <%= form.submit %>
+    <div class="form-group col-md-12">
+      <h3><i class="fas fa-folder"></i><%= @context %></h3>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :name, "Nome", class: "color-label" %>
+        <%= form.text_field :name, class: "form-control" %>
+      </div>
+      <div class="form-group col-md-6">
+        <%= form.label :course_id, "Curso", class: "color-label" %>
+        <% if @courses.present? %>
+          <div >
+          <%= form.collection_select :course_id, @courses, :id, :name, {}, class:"form-control" %>
+          </div>
+        <% else %>
+          <div class="form-control">
+            <p>Não há cursos cadastrados</p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :start_date, "Data Inicial", class: "color-label" %>
+        <%= form.date_field :start_date, class: "form-control" %>
+      </div>
+
+      <div class="form-group col-md-6">
+        <%= form.label :end_date, "Data Final", class: "color-label" %>
+        <%= form.date_field :end_date, class: "form-control" %>
+      </div>
+
+    </div>
+      <div class="form-group col-md-12">
+        <%= form.label :status, class: "color-label" %>
+        <%= form.check_box :status %>
+      </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.submit "Salvar", class: "btn btn-primary" %>
+        <%= link_to "Voltar", classrooms_path, class: "btn btn-danger" %>
+      </div>
+    </div>
   </div>
 <% end %>

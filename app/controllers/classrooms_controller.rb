@@ -18,6 +18,7 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms/new
   def new
+    @context = "Nova Turma"
     if has_permission?
       @classroom = Classroom.new
       @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
@@ -28,6 +29,7 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms/1/edit
   def edit
+    @context = "Editar Turma"
   end
 
   # POST /classrooms or /classrooms.json
