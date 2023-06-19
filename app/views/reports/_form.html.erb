@@ -1,3 +1,57 @@
+<style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: 380px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  button {
+    position: relative;
+    top: 15px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+  i{
+    padding-left: 10px;
+  }
+
+  .form-control::before {
+    content: "Selecione um arquivo"
+  }
+
+</style>
+
 <%= form_with(model: report) do |form| %>
   <% if report.errors.any? %>
     <div style="color: red">
@@ -10,26 +64,39 @@
       </ul>
     </div>
   <% end %>
+  <div class="formulario">
+    <div class="form-group col-md-12">
+      <h3><i class="fas fa-folder"></i><%= @context %></h3>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :reported_effort, "Horas reportadas", class: "color-label" %>
+        <%= form.number_field :reported_effort, min: 0, step: 0.5, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.number_field :reported_effort, min: 0, step: 0.5, placeholder: 'Horas reportadas...' %>
-  </div>
+      <div class="form-group col-md-6">
+        <%= form.label :reported_date, "Data do reporte", class: "color-label" %>
+        <%= form.date_field :reported_date, class: "form-control" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.label :reported_date, "Data do reporte", style: "display: block" %>
-    <%= form.date_field :reported_date %>
-  </div>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.label :project_id, "Projeto", class: "color-label" %>
+        <%= form.collection_select :project_id, @projects, :id, :name, {}, class: "form-control" %>
+      </div>
 
-  <div>
-    <%= form.label :project_id, "Projeto", style: "display: block" %>
-    <%= form.collection_select :project_id, @projects, :id, :name %>
-  </div>
+      <div class="form-group col-md-6">
+        <%= form.label :file, "Arquivo", class: "color-label" %>
+        <%= form.file_field :file, class: "form-control" %>
+      </div>
+    </div>
 
-  <div>
-    <%= form.file_field :file %>
-  </div>
-
-  <div>
-    <%= form.submit "Salvar" %>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <%= form.submit "Salvar", class: "btn btn-primary" %>
+        <%= link_to "Voltar", reports_path, class: "btn btn-danger" %>
+      </div>
+    </div>
   </div>
 <% end %>

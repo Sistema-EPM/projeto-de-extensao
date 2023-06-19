@@ -3,6 +3,7 @@ class ReportsController < ApplicationController
 
   # GET /reports or /reports.json
   def index
+    @context = "Reportes"
     if user_signed_in? && !current_user.is_responsible
       @reports = Report.joins(:user).where(users: { id: current_user.id })
       @projects = Project.includes(:users, :reports).joins(:assignments).where(users: { id: current_user.id })
@@ -17,6 +18,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
+    @context = "Novo Reporte"
     if user_signed_in? && !current_user.is_responsible
       @report = Report.new
       @projects = Project.joins(:assignments).where(status: "Em andamento", assignments: { user_id: current_user.id }).distinct
@@ -27,6 +29,8 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @context = "Editando Reporte"
+    @projects = Project.joins(:assignments).where(status: "Em andamento", assignments: { user_id: current_user.id }).distinct
   end
 
   # POST /reports or /reports.json
