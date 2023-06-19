@@ -1,5 +1,5 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[ show edit update destroy ]
+  before_action :set_report, only: %i[ show edit update ]
 
   # GET /reports or /reports.json
   def index
@@ -73,10 +73,17 @@ class ReportsController < ApplicationController
   # DELETE /reports/1 or /reports/1.json
   def destroy
     if has_permission?
-      @report.destroy
+      return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        Report.where(id: selected_ids).destroy_all
+      else
+        @report.destroy
+      end
 
       respond_to do |format|
-        format.html { redirect_to reports_url, notice: "Report was successfully destroyed." }
+        format.html { redirect_to reports_url, notice: "Reporte excluído com sucesso." }
         format.json { head :no_content }
       end
     else

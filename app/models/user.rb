@@ -6,8 +6,8 @@ class User < ApplicationRecord
   belongs_to :organization
   belongs_to :classroom, optional: true
 
-  has_many :reports
-  has_many :courses
-  has_many :projects, through: :reports
-  has_many :assignments
+  has_many :reports, dependent: :destroy
+  has_many :courses, dependent: :destroy
+  has_many :projects, through: :reports, dependent: :destroy
+  has_many :assignments, dependent: :destroy
 end
