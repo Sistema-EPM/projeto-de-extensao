@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: %i[ show edit update ]
 
   # GET /courses or /courses.json
   def index
@@ -67,11 +67,18 @@ class CoursesController < ApplicationController
 
   # DELETE /courses/1 or /courses/1.json
   def destroy
-    if admin_signed_in?
-      @course.destroy
+    if has_permission?
+      return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        Course.where(id: selected_ids).destroy_all
+      else
+        @course.destroy
+      end
 
       respond_to do |format|
-        format.html { redirect_to courses_url, notice: "Course was successfully destroyed." }
+        format.html { redirect_to courses_url, notice: "Curso excluído com sucesso." }
         format.json { head :no_content }
       end
     else

@@ -7,3 +7,5 @@
 //= link reports.js
 //= link projects.js
 //= link classrooms.js
+//= link courses.js
+//= link student_reports.js
