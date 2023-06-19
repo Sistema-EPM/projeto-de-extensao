@@ -12,6 +12,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/new
   def new
+    @context = "Vincular Aluno"
     if has_permission?
       @assignment = Assignment.new
       @projects = Project.where(organization_id: set_organization.id)
@@ -23,6 +24,7 @@ class AssignmentsController < ApplicationController
 
   # GET /assignments/1/edit
   def edit
+    @context = "Editando Vínculo"
   end
 
   # POST /assignments or /assignments.json
@@ -31,6 +33,8 @@ class AssignmentsController < ApplicationController
       @assignment = Assignment.new(assignment_params)
 
       respond_to do |format|
+        format.html { redirect_to projects_path, notice: "Aluno já faz parte do projeto." } if Assignment.where(user_id: assignment_params[:user_id], project_id: assignment_params[:project_id]).present?
+
         if @assignment.save
           format.html { redirect_to projects_path, notice: "Assignment was successfully created." }
           format.json { render :show, status: :created, location: @assignment }

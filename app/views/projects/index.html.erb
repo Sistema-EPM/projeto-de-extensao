@@ -2,15 +2,51 @@
 
 <div id="projects">
   <%= render partial: "shared/pages_index" %>
-  <% @projects.each do |project| %>
-    <%= render project %>
-    <p>
-      <%= link_to "Show this project", project %>
-    </p>
-  <% end %>
+  <div style="padding: 20px 0">
+    <%= form_tag(destroy_selected_projects_path, method: :delete, id: "delete-form") do %>
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table" %>
+
+        <tbody>
+          <% @projects.each do |project| %>
+            <tr id="project-<%= project.id %>" data-project-id="<%= project.id %>">
+              <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+                <td style="text-align: center">
+                  <%= check_box_tag 'selected_ids[]', project.id, false, class: 'project-checkbox' %>
+                </td>
+              <% end %>
+              <td><%= link_to project.name, project, class: "row-link" %></td>
+              <td><%= project.competency %></td>
+              <td><%= project.status %></td>
+              <td><%= project.modality %></td>
+              <td><%= project.description %></td>
+              <td><%= project.classroom.name %></td>
+              <td><%= project.user.name %></td>
+              <td><%= project.ods_project.name %></td>
+              <% if current_user.present? && !current_user.is_responsible %>
+                <td><%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %></td>
+              <% else %>
+                <td><%= project.reports.sum(:reported_effort) %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+        <div style="display: flex;">
+          <div style="margin-right: auto">
+            <%= link_to "Novo", new_project_path, class: "btn btn-primary" %>
+            <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+            <%= button_tag "Excluir", class: "btn btn-danger", id: 'delete-selected-btn', disabled: true %>
+          </div>
+          <div>
+            <%= link_to "Vincular aluno", new_assignment_path, class: "btn btn-info" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
-<% if (admin_signed_in? || current_user.try(:is_responsible)) %>
-  <%= link_to "New project", new_project_path %>
-  <%= link_to "Vincular aluno", new_assignment_path %>
-<% end %>
+<%= javascript_include_tag 'projects' %>

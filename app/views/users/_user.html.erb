@@ -19,23 +19,25 @@
     <%= user.organization.name %>
   </p>
 
-  <p>
-    <strong>Projetos:</strong>
-    <% @projects_by_student.each do |project| %>
-      <p>
-        <strong>Nome:</strong>
-        <%= project.name %>
-      </p>
+  <% if @projects_by_student.present? %>
+    <p>
+      <strong>Projetos:</strong>
+      <% @projects_by_student.each do |project| %>
+        <p>
+          <strong>Nome:</strong>
+          <%= project.name %>
+        </p>
 
-      <p>
-        <strong>Descrição:</strong>
-        <%= project.description %>
-      </p>
+        <p>
+          <strong>Descrição:</strong>
+          <%= project.description %>
+        </p>
 
-      <p>
-        <strong>Horas reportadas:</strong>
-        <%= project.reports.where(user_id: user.id).sum(:reported_effort) %>
-      </p>
-    <% end %>
-  </p>
+        <p>
+          <strong>Horas reportadas:</strong>
+          <%= project.reports.where(user_id: user.id).sum(:reported_effort) %>
+        </p>
+      <% end %>
+    </p>
+  <% end %>
 </div>

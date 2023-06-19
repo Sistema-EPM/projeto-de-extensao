@@ -56,6 +56,26 @@ Rails.application.routes.draw do
     delete :destroy_selected, on: :collection
   end
 
+  # Projetos
+  resources :projects do
+    delete :destroy_selected, on: :collection
+  end
+
+  # Turmas
+  resources :classrooms do
+    delete :destroy_selected, on: :collection
+  end
+
+  # Cusos
+  resources :courses do
+    delete :destroy_selected, on: :collection
+  end
+
+  # Reportes
+  resources :reports do
+    delete :destroy_selected, on: :collection
+  end
+
   get '/access_denied', to: 'application#access_denied', as: 'access_denied'
   
   get '/search_student', to: 'users#search_student',  as: :search_student

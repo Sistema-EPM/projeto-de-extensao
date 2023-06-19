@@ -1,16 +1,45 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Reportes</h1>
-
 <div id="reports">
-  <% @reports.each do |report| %>
-    <%= render report %>
-    <p>
-      <%= link_to "Mostrar", report %>
-    </p>
-  <% end %>
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0">
+    <%= form_tag(destroy_selected_reports_path, method: :delete, id: "delete-form") do %>
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table" %>
+
+        <tbody>
+          <% @reports.each do |report| %>
+            <tr id="report-<%= report.id %>" data-report-id="<%= report.id %>">
+              <td style="text-align: center">
+                <%= check_box_tag 'selected_ids[]', report.id, false, class: 'report-checkbox' %>
+              </td>
+              <td><%= link_to report.reported_effort, report, class: "row-link" %></td>
+              <td><%= report.reported_date %></td>
+              <% if report.status.nil? %>
+                <td>Aguardando</td>
+              <% else %>
+                <td><%= report.status ? "Aprovado" : "Reprovado" %></td>
+              <% end %>
+              <td><%= report.project.name %></td>
+              <td><%= report.user.name %></td>
+              <% if report.file.attached? %>
+                <td><a href="<%= url_for(report.file) %>"><%= report.file.filename %></a></td>
+              <% else %>
+                <td>Nenhum arquivo anexado</td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <div style="display: flex;">
+        <div style="margin-right: auto">
+          <%= link_to "Novo", new_report_path, class: "btn btn-primary" %>
+          <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
 
-<% if user_signed_in? && !current_user.is_responsible %>
-  <%= link_to "Novo", new_report_path %>
-<% end %>
+<%= javascript_include_tag 'student_reports' %>

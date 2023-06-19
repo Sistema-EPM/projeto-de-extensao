@@ -1,8 +1,9 @@
 class ReportsController < ApplicationController
-  before_action :set_report, only: %i[ show edit update destroy ]
+  before_action :set_report, only: %i[ show edit update ]
 
   # GET /reports or /reports.json
   def index
+    @context = "Reportes"
     if user_signed_in? && !current_user.is_responsible
       @reports = Report.joins(:user).where(users: { id: current_user.id })
       @projects = Project.includes(:users, :reports).joins(:assignments).where(users: { id: current_user.id })
@@ -17,6 +18,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/new
   def new
+    @context = "Novo Reporte"
     if user_signed_in? && !current_user.is_responsible
       @report = Report.new
       @projects = Project.joins(:assignments).where(status: "Em andamento", assignments: { user_id: current_user.id }).distinct
@@ -27,6 +29,8 @@ class ReportsController < ApplicationController
 
   # GET /reports/1/edit
   def edit
+    @context = "Editando Reporte"
+    @projects = Project.joins(:assignments).where(status: "Em andamento", assignments: { user_id: current_user.id }).distinct
   end
 
   # POST /reports or /reports.json
@@ -69,10 +73,17 @@ class ReportsController < ApplicationController
   # DELETE /reports/1 or /reports/1.json
   def destroy
     if has_permission?
-      @report.destroy
+      return "Nenhum aluno foi selecionado." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        Report.where(id: selected_ids).destroy_all
+      else
+        @report.destroy
+      end
 
       respond_to do |format|
-        format.html { redirect_to reports_url, notice: "Report was successfully destroyed." }
+        format.html { redirect_to reports_url, notice: "Reporte excluído com sucesso." }
         format.json { head :no_content }
       end
     else

@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ show edit update ]
 
   # GET /projects or /projects.json
   def index
@@ -98,10 +98,17 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1 or /projects/1.json
   def destroy
     if has_permission?
-      @project.destroy
+      return "Nenhum projeto foi selecionado." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        Project.where(id: selected_ids).destroy_all
+      else
+        @project.destroy
+      end
 
       respond_to do |format|
-        format.html { redirect_to projects_url, notice: "Project was successfully destroyed." }
+        format.html { redirect_to projects_url, notice: "Projeto excluído com sucesso." }
         format.json { head :no_content }
       end
     else
@@ -113,12 +120,12 @@ class ProjectsController < ApplicationController
     @name = params[:search]
     if admin_signed_in?
       @projects_by_name = Project.where("LOWER(name) LIKE LOWER(?)", "%#{@name}%").where(organization_id: set_organization.id)
-        .select(:name, :description, :competency, :status)
+        .select(:name, :description, :competency, :status, :modality, :classroom_id, :user_id, :ods_project_id)
         .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
           FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
     elsif has_permission?
       @projects_by_name = Project.joins(classroom: :course).where("LOWER(projects.name) LIKE LOWER(?)", "%#{@name}%").where(organization_id: set_organization.id, courses: { user_id: current_user.id })
-        .select(:name, :description, :competency, :status)
+        .select(:name, :description, :competency, :status, :modality, :classroom_id, :user_id, :ods_project_id)
         .select("(SELECT COALESCE(SUM(r.reported_effort), 0) 
           FROM reports r WHERE r.project_id = projects.id) AS reported_hours")
     else

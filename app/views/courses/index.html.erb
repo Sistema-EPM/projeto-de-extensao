@@ -1,14 +1,37 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Courses</h1>
-
 <div id="courses">
-  <% @courses.each do |course| %>
-    <%= render course %>
-    <p>
-      <%= link_to "Show this course", course %>
-    </p>
-  <% end %>
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0">
+    <%= form_tag(destroy_selected_courses_path, method: :delete, id: "delete-form") do %>
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table" %>
+
+        <tbody>
+          <% @courses.each do |course| %>
+            <tr id="course-<%= course.id %>" data-course-id="<%= course.id %>">
+              <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+                <td style="text-align: center">
+                  <%= check_box_tag 'selected_ids[]', course.id, false, class: 'course-checkbox' %>
+                </td>
+              <% end %>
+              <td><%= link_to course.name, course, class: "row-link" %></td>
+              <td><%= course.user.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+        <div style="display: flex;">
+          <div style="margin-right: auto">
+            <%= link_to "Novo", new_course_path, class: "btn btn-primary" %>
+            <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+            <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New course", new_course_path %>
+<%= javascript_include_tag 'courses' %>

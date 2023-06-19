@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <style>
   * {
     box-sizing: border-box;
@@ -46,7 +48,7 @@
 <%= form_with(model: project) do |form| %>
   <div class="formulario">
     <div class="form-group col-md-12">
-      <h3><i class="fas fa-folder"></i><%= @context %></h3>
+      <h3><%= @context %><i class="fas fa-folder"></i></h3>
     </div>
     <div class="form-row">
       <div class="form-group col-md-6">

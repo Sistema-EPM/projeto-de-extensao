@@ -1,0 +1,23 @@
+.error-page {
+  text-align: center;
+  padding: 20px;
+}
+
+.error-page h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.error-page a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+.error-page a:hover {
+  background-color: #555;
+}

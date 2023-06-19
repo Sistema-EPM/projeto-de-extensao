@@ -1,8 +1,9 @@
 class ClassroomsController < ApplicationController
-  before_action :set_classroom, only: %i[ show edit update destroy ]
+  before_action :set_classroom, only: %i[ show edit update ]
 
   # GET /classrooms or /classrooms.json
   def index
+    @context = "Turmas"
     if admin_signed_in?
       @classrooms = Classroom.joins(course: :user).where(users: { organization_id: set_organization.id })
     elsif has_permission?
@@ -69,10 +70,17 @@ class ClassroomsController < ApplicationController
   # DELETE /classrooms/1 or /classrooms/1.json
   def destroy
     if has_permission?
-      @classroom.destroy
+      return "Nenhuma turma foi selecionada." unless params[:selected_ids].present?
+
+      selected_ids = params[:selected_ids]
+      if selected_ids.present?
+        Classroom.where(id: selected_ids).destroy_all
+      else
+        @classroom.destroy
+      end
 
       respond_to do |format|
-        format.html { redirect_to classrooms_url, notice: "Classroom was successfully destroyed." }
+        format.html { redirect_to classrooms_url, notice: "Turma excluída com sucesso." }
         format.json { head :no_content }
       end
     else

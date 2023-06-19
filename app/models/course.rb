@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
   belongs_to :user
 
-  has_many :classrooms
+  has_many :classrooms, dependent: :destroy
 end

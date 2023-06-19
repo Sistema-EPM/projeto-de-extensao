@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('load', function() {
   const approveButton = document.getElementById('approve-button');
   const reproveButton = document.getElementById('reprove-button');
   const checkboxes = document.getElementsByClassName('report-checkbox');
@@ -89,6 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Array.from(checkboxes).forEach(checkbox => {
       checkbox.checked = isChecked;
     });
-});
+  });
 
 });
