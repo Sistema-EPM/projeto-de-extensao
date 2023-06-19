@@ -27,7 +27,7 @@
 
       <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
         <div style="display: flex;">
-          <div class="form-group col-md-6" style="margin-right: auto">
+          <div style="margin-right: auto">
             <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
             <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
             <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>

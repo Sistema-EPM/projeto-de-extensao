@@ -5,3 +5,5 @@
 //= link students.js
 //= link responsibles.js
 //= link reports.js
+//= link projects.js
+//= link classrooms.js

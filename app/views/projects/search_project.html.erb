@@ -9,9 +9,13 @@
       <thead>
         <tr>
           <th style="text-align: center">Nome</th>
-          <th style="text-align: center">Descrição</th>
           <th style="text-align: center">Competência</th>
           <th style="text-align: center">Status</th>
+          <th style="text-align: center">Modalidade</th>
+          <th style="text-align: center">Descrição</th>
+          <th style="text-align: center">Turma</th>
+          <th style="text-align: center">Coordenador</th>
+          <th style="text-align: center">Projeto ODS</th>
           <th style="text-align: center">Horas reportadas</th>
         </tr>
       </thead>
@@ -20,15 +24,22 @@
         <% @projects_by_name.each do |project| %>
           <tr>
             <td><%= project.name %></td>
-            <td><%= project.description %></td>
             <td><%= project.competency %></td>
             <td><%= project.status %></td>
-            <td><%= project.reported_hours %></td>
+            <td><%= project.modality %></td>
+            <td><%= project.description %></td>
+            <td><%= project.classroom.name %></td>
+            <td><%= project.user.name %></td>
+            <td><%= project.ods_project.name %></td>
+            <% if current_user.present? && !current_user.is_responsible %>
+              <td><%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %></td>
+            <% else %>
+              <td><%= project.reports.sum(:reported_effort) %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
     </table>
     <%= link_to "Novo", new_project_path, class: "btn btn-primary" %>
-    <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
   </div>
 <% end %>

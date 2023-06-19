@@ -1,14 +1,40 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Classrooms</h1>
-
 <div id="classrooms">
-  <% @classrooms.each do |classroom| %>
-    <%= render classroom %>
-    <p>
-      <%= link_to "Show this classroom", classroom %>
-    </p>
-  <% end %>
+  <%= render partial: "shared/pages_index" %>
+  <div style="padding: 20px 0">
+    <%= form_tag(destroy_selected_users_path, method: :delete, id: "delete-form") do %>
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table" %>
+
+        <tbody>
+          <% @classrooms.each do |classroom| %>
+            <tr id="classroom-<%= classroom.id %>" data-classroom-id="<%= classroom.id %>">
+              <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+                <td style="text-align: center">
+                  <%= check_box_tag 'selected_ids[]', classroom.id, false, class: 'classroom-checkbox' %>
+                </td>
+              <% end %>
+              <td><%= link_to classroom.name, classroom, class: "row-link" %></td>
+              <td><%= classroom.start_date %></td>
+              <td><%= classroom.end_date %></td>
+              <td><%= classroom.status ? "Ativo" : "Inativo" %></td>
+              <td><%= classroom.course.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+        <div style="display: flex;">
+          <div style="margin-right: auto">
+            <%= link_to "Novo", new_classroom_path, class: "btn btn-primary" %>
+            <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
+            <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New classroom", new_classroom_path %>
+<%= javascript_include_tag 'classrooms' %>
