@@ -29,7 +29,7 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms/1/edit
   def edit
-    @context = "Editar Turma"
+    @context = "Editando Turma"
   end
 
   # POST /classrooms or /classrooms.json
