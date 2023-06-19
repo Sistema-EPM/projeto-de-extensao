@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/new
   def new
+    @context = "Novo Curso"
     if admin_signed_in?
       @course = Course.new
       @users = User.where(is_responsible: true, organization_id: set_organization.id)
@@ -27,6 +28,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1/edit
   def edit
+    @context = "Editando Curso"
   end
 
   # POST /courses or /courses.json
