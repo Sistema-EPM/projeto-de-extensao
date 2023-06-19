@@ -3,7 +3,7 @@
 <div id="reports">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
-    <%= form_tag(destroy_selected_users_path, method: :delete, id: "delete-form") do %>
+    <%= form_tag(destroy_selected_reports_path, method: :delete, id: "delete-form") do %>
       <table class="table table-bordered table-hover">
         <%= render partial: "table" %>
 
@@ -36,11 +36,10 @@
         <div style="margin-right: auto">
           <%= link_to "Novo", new_report_path, class: "btn btn-primary" %>
           <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
-          <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
         </div>
       </div>
     <% end %>
   </div>
 </div>
 
-<%= javascript_include_tag 'reports' %>
+<%= javascript_include_tag 'student_reports' %>

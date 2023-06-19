@@ -3,7 +3,7 @@
 <div id="projects">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
-    <%= form_tag(destroy_selected_users_path, method: :delete, id: "delete-form") do %>
+    <%= form_tag(destroy_selected_projects_path, method: :delete, id: "delete-form") do %>
       <table class="table table-bordered table-hover">
         <%= render partial: "table" %>
 

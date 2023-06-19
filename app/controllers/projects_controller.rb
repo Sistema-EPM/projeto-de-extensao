@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: %i[ show edit update destroy ]
+  before_action :set_project, only: %i[ show edit update ]
 
   # GET /projects or /projects.json
   def index
@@ -99,7 +99,6 @@ class ProjectsController < ApplicationController
   def destroy
     if has_permission?
       return "Nenhum projeto foi selecionado." unless params[:selected_ids].present?
-      @project.destroy
 
       selected_ids = params[:selected_ids]
       if selected_ids.present?
