@@ -1,14 +1,4 @@
-<p style="color: green"><%= notice %></p>
-
-<h1>Organizations</h1>
-
-<div id="organizations">
-  <% @organizations.each do |organization| %>
-    <%= render organization %>
-    <p>
-      <%= link_to "Show this organization", organization %>
-    </p>
-  <% end %>
+<div class="error-page">
+  <h1>Não há nada para mostrar</h1>
+  <%= link_to 'Voltar', projects_path %>
 </div>
-
-<%= link_to "New organization", new_organization_path %>
