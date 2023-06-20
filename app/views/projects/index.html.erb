@@ -1,4 +1,4 @@
-<div id="projects">
+<div id="projects" class="formulario">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
     <%= form_tag(destroy_selected_projects_path, method: :delete, id: "delete-form") do %>
@@ -14,10 +14,7 @@
                 </td>
               <% end %>
               <td><%= link_to project.name, project, class: "row-link" %></td>
-              <td><%= project.competency %></td>
               <td><%= project.status %></td>
-              <td><%= project.modality %></td>
-              <td><%= project.description %></td>
               <td><%= project.classroom.name %></td>
               <td><%= project.user.name %></td>
               <td><%= project.ods_project.name %></td>
@@ -39,7 +36,7 @@
             <%= button_tag "Excluir", class: "btn btn-danger", id: 'delete-selected-btn', disabled: true %>
           </div>
           <div>
-            <%= link_to "Vincular aluno", new_assignment_path, class: "btn btn-info" %>
+            <%= link_to "Vincular aluno", new_assignment_path, class: "btn btn-custom" %>
           </div>
         </div>
       <% end %>

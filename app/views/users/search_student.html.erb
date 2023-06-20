@@ -1,29 +1,45 @@
-<% if @students_by_name.nil? %>
-  <p>Nenhum aluno encontrado</p>
-<% else %>
-  <%= render partial: "shared/pages_index" %>
-  <div style="padding: 20px 0" class="table-responsive primary-table">
-    <table class="table table-bordered table-hover">
-      <%= render partial: "table" %>
+<style>
+  .formulario {
+    background-color: white;
+    padding: 4rem;
+    max-width: 100%;
+    margin: 0 auto;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+</style>
 
-      <tbody>
-        <% @students_by_name.each do |student| %>
-          <tr id="student-<%= student.id %>">
-            <td style="text-align: center">
-              <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
-            </td>
-            <td><%= student.name %></td>
-            <td><%= student.email %></td>
-            <td><%= student.classroom.name %></td>
-            <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
-            <td style="text-align: center"><%= student.reported_hours %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
-    <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
-  </div>
-<% end %>
+<div class="formulario">
+  <% if @students_by_name.nil? %>
+    <p>Nenhum aluno encontrado</p>
+  <% else %>
+    <%= render partial: "shared/pages_index" %>
+    <div style="padding: 20px 0" class="table-responsive primary-table">
+      <table class="table table-bordered table-hover">
+        <%= render partial: "table" %>
+
+        <tbody>
+          <% @students_by_name.each do |student| %>
+            <tr id="student-<%= student.id %>">
+              <td style="text-align: center">
+                <%= check_box_tag 'selected_ids[]', student.id, false, class: 'student-checkbox' %>
+              </td>
+              <td><%= student.name %></td>
+              <td><%= student.email %></td>
+              <td><%= student.classroom.name %></td>
+              <td style="text-align: center"><%= student.status ? "Ativo" : "Evadido" %></td>
+              <td style="text-align: center"><%= student.reported_hours %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
+      <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
+    </div>
+  <% end %>
+</div>
 
 <%= javascript_include_tag 'students' %>

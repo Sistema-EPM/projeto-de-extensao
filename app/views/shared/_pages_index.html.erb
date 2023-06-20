@@ -1,3 +1,12 @@
+<style>
+  h1{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+</style>
+
 <div style="display: flex; align-items: center;">
   <div style="display: inline-block;">
     <h1><%= @context %></h1>
@@ -10,12 +19,12 @@
     <% if controller.class.to_s === "UsersController" %>
       <%= form_tag('/search_student', method: 'get', style: "display: flex; justify-content: space-between") do %>
         <%= text_field_tag :search, params[:search], placeholder: "Busque um aluno pelo nome", class: "form-control", style: "display: inline-block; margin-right: 5px" %>
-        <%= submit_tag 'Pesquisar', type: "button", class: "btn btn-primary", style: "display: inline-block" %>
+        <%= submit_tag 'Pesquisar', type: "button", class: "btn btn-custom", style: "display: inline-block" %>
       <% end %>
     <% elsif controller.class.to_s === "ProjectsController" %>
       <%= form_tag('/search_project', method: 'get', style: "display: flex; justify-content: space-between") do %>
         <%= text_field_tag :search, params[:search], placeholder: 'Busque um projeto pelo nome', class: "form-control", style: "display: inline-block; margin-right: 5px" %>
-        <%= submit_tag 'Pesquisar', type: "button", class: "btn btn-primary", style: "display: inline-block" %>
+        <%= submit_tag 'Pesquisar', type: "button", class: "btn btn-custom", style: "display: inline-block" %>
       <% end %>
     <% end %>
   <% end %>

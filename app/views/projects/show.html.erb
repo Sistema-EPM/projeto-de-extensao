@@ -35,6 +35,7 @@
   }
 
   .style-buttons {
+    margin-top: 2vh;
     display: flex; 
     max-width: max-content;
     gap: 10px;
@@ -48,10 +49,10 @@
 
 <div class="formulario">
   <%= render @project %>
-  <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
-    <div class="style-buttons">
+  <div class="style-buttons">
+    <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
       <%= link_to "Editar", edit_project_path(@project), class: "btn btn-success" %>
-      <%= link_to "Voltar", projects_path, class: "btn btn-warning" %>
-    </div>
-  <% end %>
+    <% end %>
+    <%= link_to "Voltar", projects_path, class: "btn btn-warning" %>
+  </div>
 </div>

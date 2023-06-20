@@ -1,8 +1,58 @@
 <%= render @report %>
 
-<div>
-  <%= link_to "Edit this report", edit_report_path(@report) %> |
-  <%= link_to "Back to reports", reports_path %>
+<style>
 
-  <%= button_to "Destroy this report", @report, method: :delete %>
-</div>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  .style-buttons {
+    margin-top: 2vh;
+    display: flex; 
+    max-width: max-content;
+    gap: 10px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+
+</style>
+
+<div class="formulario">
+  <%= render @report %>
+
+  <div class="style-buttons">
+    <%= link_to "Editar", edit_report_path(@report), class: "btn btn-success" %>
+    <%= link_to "Voltar", reports_path, class: "btn btn-warning" %>
+  </div>
