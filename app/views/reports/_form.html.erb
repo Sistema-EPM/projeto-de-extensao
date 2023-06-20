@@ -46,10 +46,6 @@
     padding-left: 10px;
   }
 
-  .form-control::before {
-    content: "Selecione um arquivo"
-  }
-
 </style>
 
 <%= form_with(model: report) do |form| %>
@@ -88,7 +84,7 @@
 
       <div class="form-group col-md-6">
         <%= form.label :file, "Arquivo", class: "color-label" %>
-        <%= form.file_field :file, class: "form-control" %>
+        <%= form.file_field :file, class: "form-control", style: "display: inline-block;" %>
       </div>
     </div>
 
