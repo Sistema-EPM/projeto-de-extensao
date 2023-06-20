@@ -117,3 +117,28 @@ buttonRegister :hover {
   margin-left: auto;
   margin-right: auto;
 }
+
+.color-label{
+  color: #5E8F87;
+}
+
+.style-buttons {
+  display: flex; 
+  max-width: max-content;
+  gap: 0.5rem;
+}
+
+.form-row {
+  margin-bottom: 20px;
+}
+
+.btn-custom {
+  text-decoration: none;
+  background-color: #5E8F87;
+  color: #FFF;
+}
+
+.btn-custom:hover {
+  background-color: #477C6E;
+  color: #FFF;
+}

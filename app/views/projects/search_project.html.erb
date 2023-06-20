@@ -34,7 +34,7 @@
             <% if current_user.present? && !current_user.is_responsible %>
               <td><%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %></td>
             <% else %>
-              <td><%= project.reports.sum(:reported_effort) %></td>
+              <td><%= project.reported_hours %></td>
             <% end %>
           </tr>
         <% end %>

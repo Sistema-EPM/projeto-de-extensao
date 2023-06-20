@@ -1,17 +1,5 @@
 
 <style>
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-  }
-
   .formulario {
     background-color: white;
     padding: 40px;
@@ -24,24 +12,10 @@
     top: 90px;
   }
 
-  .form-row {
-    margin-bottom: 20px;
-  }
-
   h3{
     position: relative;
     top: -20px;
     font-weight: bold;
-    color: #5E8F87;
-  }
-
-  .style-buttons {
-    display: flex; 
-    max-width: max-content;
-    gap: 10px;
-  }
-
-  .color-label{
     color: #5E8F87;
   }
 
@@ -55,7 +29,7 @@
     <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
       <%= link_to "Reportes", reports_user_path, class: "btn btn-success" %>
       <%= link_to "Editar", edit_user_path(@student), class: "btn btn-warning" %>
-      <%= link_to "Voltar", users_path, class: "btn btn-primary" %>
     <% end %>
+    <%= link_to "Voltar", users_path, class: "btn btn-primary" %>
   </div>
 </div>

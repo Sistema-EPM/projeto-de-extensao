@@ -1,4 +1,6 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <div id="<%= dom_id report %>">
+  <h3><%= @context %></h3>
   <p>
     <strong>Horas reportadas:</strong>
     <%= report.reported_effort %>
@@ -27,7 +29,7 @@
   <p>
     <strong>Arquivos:</strong>
     <% if report.file.attached? %>
-      <a href="<%= url_for(report.file) %>"><%= report.file.filename %></a>
+      <a href="<%= url_for(report.file) %>" download><%= report.file.filename %></a>
     <% else %>
       Nenhum arquivo anexado
     <% end %>

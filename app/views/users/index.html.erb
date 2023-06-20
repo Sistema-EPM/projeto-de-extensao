@@ -1,6 +1,20 @@
+<style>
+  .formulario {
+    background-color: white;
+    padding: 4rem;
+    max-width: 100%;
+    margin: 0 auto;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+</style>
+
 <p style="color: green"><%= notice %></p>
 
-<div id="students">
+<div id="students" class="formulario">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
     <%= form_tag(destroy_selected_users_path, method: :delete, id: "delete-form") do %>
@@ -27,13 +41,13 @@
 
       <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
         <div style="display: flex;">
-          <div style="margin-right: auto">
+          <div style="margin-right: auto" class="style-buttons">
             <%= link_to "Novo", new_user_path, class: "btn btn-primary" %>
             <%= button_tag "Editar", class: "btn btn-warning", id: 'edit-button', disabled: true %>
             <%= button_tag 'Excluir', class: 'btn btn-danger', id: 'delete-selected-btn', disabled: true %>
           </div>
           <div>
-            <%= link_to 'Mostrar usuários inativos', inactive_students_path, class: 'btn btn-info' %>
+            <%= link_to 'Mostrar usuários inativos', inactive_students_path, class: 'btn btn-custom' %>
           </div>
         </div>
       <% end %>
