@@ -29,10 +29,12 @@ class UsersController < ApplicationController
 
   # GET /students/1 or /students/1.json
   def show
+    @context = "Dados do Aluno"
     @projects_by_student = @student.projects.includes(:reports)
   end
 
   def show_responsible
+    @context = "Dados do Coordenador"
   end
 
   # GET /students/new

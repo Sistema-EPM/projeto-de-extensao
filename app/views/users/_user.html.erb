@@ -1,4 +1,5 @@
 <div id="<%= dom_id user %>">
+  <h3><%= @context %></h3>
   <p>
     <strong>Nome:</strong>
     <%= user.name %>
@@ -20,24 +21,22 @@
   </p>
 
   <% if @projects_by_student.present? %>
-    <p>
-      <strong>Projetos:</strong>
+    <h2>Projetos</h2>
+    <table class="table table-bordered table-hover" style="table-layout: fixed; width: 100%;">
+      <thead>
+        <tr>
+          <th style="width: 50%; padding: 10px; border: 1px solid #ccc;">Nome:</th>
+          <th style="width: 50%; padding: 10px; border: 1px solid #ccc;">Horas reportadas:</th>
+        </tr>
+      </thead>
       <% @projects_by_student.each do |project| %>
-        <p>
-          <strong>Nome:</strong>
-          <%= project.name %>
-        </p>
-
-        <p>
-          <strong>Descrição:</strong>
-          <%= project.description %>
-        </p>
-
-        <p>
-          <strong>Horas reportadas:</strong>
-          <%= project.reports.where(user_id: user.id).sum(:reported_effort) %>
-        </p>
+        <tbody>
+          <tr>
+            <td><%= project.name %></td>
+            <td><%= project.reports.where(user_id: user.id).sum(:reported_effort) %></td>
+          </tr>
+        </tbody>
       <% end %>
-    </p>
+    </table>
   <% end %>
 </div>
