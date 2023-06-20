@@ -118,6 +118,18 @@ buttonRegister :hover {
   margin-right: auto;
 }
 
+.formulario {
+  background-color: white;
+  padding: 4rem;
+  max-width: 100%;
+  margin: 0 auto;
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  top: 90px;
+}
+
 .color-label{
   color: #5E8F87;
 }
@@ -141,4 +153,8 @@ buttonRegister :hover {
 .btn-custom:hover {
   background-color: #477C6E;
   color: #FFF;
+}
+
+td {
+  text-align: center;
 }

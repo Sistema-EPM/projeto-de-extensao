@@ -1,6 +1,15 @@
+<style>
+  h1{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+</style>
+
 <p style="color: green"><%= notice %></p>
 
-<div id="student-reports">
+<div id="student-reports" class="formulario">
   <div style="display: flex; align-items: center;">
     <div style="display: inline-block;">
       <h1>Reportes de <%= @user.name %></h1>
@@ -17,12 +26,12 @@
               <%= check_box_tag 'select_all', false, false, id: 'select-all-checkbox' %>
             </th>
           <% end %>
-          <th style="text-align: center">Horas reportadas</th>
-          <th style="text-align: center">Data do reporte</th>
-          <th style="text-align: center">Status</th>
-          <th style="text-align: center">Projeto</th>
-          <th style="text-align: center">Aluno</th>
-          <th style="text-align: center">Arquivo</th>
+          <th style="text-align: center; width: 15%;" class="color-label">Horas reportadas</th>
+          <th style="text-align: center; width: 15%;" class="color-label">Data do reporte</th>
+          <th style="text-align: center; width: 15%;" class="color-label">Status</th>
+          <th style="text-align: center; width: 20%" class="color-label">Projeto</th>
+          <th style="text-align: center; width: 20%" class="color-label">Aluno</th>
+          <th style="text-align: center; width: 15%;" class="color-label">Arquivo</th>
         </tr>
       </thead>
 
