@@ -50,7 +50,7 @@
 <p style="color: green"><%= notice %></p>
 
 <div class="formulario">
-<%= render @student %>
+  <%= render @student %>
   <div class="style-buttons">
     <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
       <%= link_to "Reportes", reports_user_path, class: "btn btn-success" %>

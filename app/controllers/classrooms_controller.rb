@@ -15,6 +15,7 @@ class ClassroomsController < ApplicationController
 
   # GET /classrooms/1 or /classrooms/1.json
   def show
+    @context = "Dados da Turma"
   end
 
   # GET /classrooms/new

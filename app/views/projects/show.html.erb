@@ -1,12 +1,59 @@
+<style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  .style-buttons {
+    display: flex; 
+    max-width: max-content;
+    gap: 10px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+
+</style>
+
 <p style="color: green"><%= notice %></p>
 
-<%= render @project %>
-
-<% if (admin_signed_in? || current_user.try(:is_responsible)) %>
-  <div>
-    <%= link_to "Edit this project", edit_project_path(@project) %> |
-    <%= link_to "Back to projects", projects_path %>
-
-    <%= button_to "Excluir", @project, method: :delete %>
-  </div>
-<% end %>
+<div class="formulario">
+  <%= render @project %>
+  <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+    <div class="style-buttons">
+      <%= link_to "Editar", edit_project_path(@project), class: "btn btn-success" %>
+      <%= link_to "Voltar", projects_path, class: "btn btn-warning" %>
+    </div>
+  <% end %>
+</div>

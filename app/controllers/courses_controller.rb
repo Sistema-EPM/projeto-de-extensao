@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
 
   # GET /courses or /courses.json
   def index
+    @context = "Cursos"
     if admin_signed_in?
       @courses = Course.joins(:user).where(users: { organization_id: set_organization.id })
     else
@@ -12,6 +13,7 @@ class CoursesController < ApplicationController
 
   # GET /courses/1 or /courses/1.json
   def show
+    @context = "Dados do Curso"
   end
 
   # GET /courses/new

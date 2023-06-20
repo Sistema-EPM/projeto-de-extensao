@@ -1,10 +1,60 @@
+<style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+  }
+
+  .formulario {
+    background-color: white;
+    padding: 40px;
+    max-width: 80%;
+    margin: 0 auto;
+    height: auto;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    top: 90px;
+  }
+
+  .form-row {
+    margin-bottom: 20px;
+  }
+
+  h3{
+    position: relative;
+    top: -20px;
+    font-weight: bold;
+    color: #5E8F87;
+  }
+
+  .style-buttons {
+    margin-top: 2vh;
+    display: flex; 
+    max-width: max-content;
+    gap: 10px;
+  }
+
+  .color-label{
+    color: #5E8F87;
+  }
+
+</style>
+
 <p style="color: green"><%= notice %></p>
 
-<%= render @classroom %>
-
-<div>
-  <%= link_to "Edit this classroom", edit_classroom_path(@classroom) %> |
-  <%= link_to "Back to classrooms", classrooms_path %>
-
-  <%= button_to "Destroy this classroom", @classroom, method: :delete %>
+<div class="formulario">
+  <%= render @classroom %>
+  <div class="style-buttons">
+    <% if (admin_signed_in? || current_user.try(:is_responsible)) %>
+      <%= link_to "Editar", edit_classroom_path(@classroom), class: "btn btn-success" %>
+      <%= link_to "Voltar", classrooms_path, class: "btn btn-warning" %>
+    <% end %>
+  </div>
 </div>
