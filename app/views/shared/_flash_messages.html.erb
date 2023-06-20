@@ -1,0 +1,8 @@
+<% flash.each do |type, message| %>
+  <div class="flash <%= type %>">
+    <p><%= message %></p>
+    <span class="close" data-dismiss="alert">&times;</span>
+  </div>
+<% end %>
+
+<%= javascript_include_tag 'messages' %>

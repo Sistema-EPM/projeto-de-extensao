@@ -1,0 +1,49 @@
+.flash {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3rem;
+
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.notice {
+  background-color: #DFF0D8;
+  color: #3C763D;
+}
+
+.alert {
+  background-color: #F2DEDE;
+  color: #A94442;
+}
+
+.warning {
+  background-color: #FCF8E3;
+  color: #8A6D3B;
+}
+
+.flash .close {
+  float: right;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1;
+  color: inherit;
+  text-shadow: none;
+  opacity: 0.5;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.flash .close:hover {
+  opacity: 1;
+}
+
+.flash p {
+  margin: 0;
+  line-height: 1.5;
+}
