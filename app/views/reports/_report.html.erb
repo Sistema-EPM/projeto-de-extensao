@@ -29,7 +29,7 @@
   <p>
     <strong>Arquivos:</strong>
     <% if report.file.attached? %>
-      <a href="<%= url_for(report.file) %>" download><%= report.file.filename %></a>
+      <a href="<%= url_for(report.file) %>" target="_blank"><%= report.file.filename %></a>
     <% else %>
       Nenhum arquivo anexado
     <% end %>

@@ -36,9 +36,7 @@ class AssignmentsController < ApplicationController
         if Assignment.where(user_id: assignment_params[:user_id], project_id: assignment_params[:project_id]).present?
           flash[:warning] = "Aluno já faz parte do projeto."
           format.html { redirect_to projects_path }
-        end
-
-        if @assignment.save
+        elsif @assignment.save
           flash[:notice] = "Aluno vinculado com sucesso."
           format.html { redirect_to projects_path }
           format.json { render :show, status: :created, location: @assignment }
