@@ -86,9 +86,11 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         if @student.save
-          format.html { redirect_to user_url(@student), notice: "Student was successfully created." }
+          flash[:notice] = "Aluno criado com sucesso."
+          format.html { redirect_to user_url(@student) }
           format.json { render :show, status: :created, location: @student }
         else
+          flash[:alert] = "Não foi possível criar aluno."
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end
@@ -108,9 +110,11 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         if @responsible.save
-          format.html { redirect_to responsibles_path, notice: "Coordenador criado com sucesso." }
+          flash[:notice] = "Coordenador criado com sucesso."
+          format.html { redirect_to responsibles_path }
           format.json { render :show_responsible, status: :created, location: @responsible }
         else
+          flash[:alert] = "Não foi possível criar coordenador."
           format.html { render :new_responsible, status: :unprocessable_entity }
           format.json { render json: @responsible.errors, status: :unprocessable_entity }
         end
@@ -125,9 +129,11 @@ class UsersController < ApplicationController
     if has_permission?
       respond_to do |format|
         if @student.update(user_params)
-          format.html { redirect_to user_url(@student), notice: "Student was successfully updated." }
+          flash[:notice] = "Aluno atualizado com sucesso."
+          format.html { redirect_to user_url(@student) }
           format.json { render :show, status: :ok, location: @student }
         else
+          flash[:alert] = "Não foi possível atualizar aluno."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @student.errors, status: :unprocessable_entity }
         end
@@ -141,9 +147,11 @@ class UsersController < ApplicationController
     if admin_signed_in?
       respond_to do |format|
         if @responsible.update(user_params)
-          format.html { redirect_to responsible_url(@responsible), notice: "Responsible was successfully updated." }
+          flash[:notice] = "Coordenador criado com sucesso."
+          format.html { redirect_to responsible_url(@responsible) }
           format.json { render :show_responsible, status: :ok, location: @responsible }
         else
+          flash[:alert] = "Não foi possível atualizar coordenador."
           format.html { render :edit_responsible, status: :unprocessable_entity }
           format.json { render json: @responsible.errors, status: :unprocessable_entity }
         end
@@ -166,7 +174,8 @@ class UsersController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { redirect_to users_url, notice: "Aluno excluído com sucesso." }
+        flash[:notice] = "Aluno excluído com sucesso."
+        format.html { redirect_to users_url }
         format.json { head :no_content }
       end
     else
@@ -186,7 +195,8 @@ class UsersController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { redirect_to responsibles_url, notice: "Coordenador excluído com sucesso." }
+        flash[:notice] = "Coordenador excluído com sucesso."
+        format.html { redirect_to responsibles_url }
         format.json { head :no_content }
       end
     else

@@ -40,9 +40,11 @@ class CoursesController < ApplicationController
 
       respond_to do |format|
         if @course.save
-          format.html { redirect_to course_url(@course), notice: "Course was successfully created." }
+          flash[:notice] = "Curso criado com sucesso."
+          format.html { redirect_to course_url(@course) }
           format.json { render :show, status: :created, location: @course }
         else
+          flash[:alert] = "Não foi possível criar curso."
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @course.errors, status: :unprocessable_entity }
         end
@@ -57,9 +59,11 @@ class CoursesController < ApplicationController
     if admin_signed_in?
       respond_to do |format|
         if @course.update(course_params)
-          format.html { redirect_to course_url(@course), notice: "Course was successfully updated." }
+          flash[:notice] = "Curso atualizado com sucesso."
+          format.html { redirect_to course_url(@course) }
           format.json { render :show, status: :ok, location: @course }
         else
+          flash[:alert] = "Não foi possível atualizar curso."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @course.errors, status: :unprocessable_entity }
         end
@@ -82,6 +86,7 @@ class CoursesController < ApplicationController
       end
 
       respond_to do |format|
+        flash[:notice] = "Curso excluído com sucesso."
         format.html { redirect_to courses_url, notice: "Curso excluído com sucesso." }
         format.json { head :no_content }
       end

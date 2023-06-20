@@ -46,8 +46,6 @@
 
 </style>
 
-<p style="color: green"><%= notice %></p>
-
 <div class="formulario">
   <%= render @project %>
   <% if (admin_signed_in? || current_user.try(:is_responsible)) %>

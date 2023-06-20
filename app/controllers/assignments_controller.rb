@@ -33,12 +33,17 @@ class AssignmentsController < ApplicationController
       @assignment = Assignment.new(assignment_params)
 
       respond_to do |format|
-        format.html { redirect_to projects_path, notice: "Aluno já faz parte do projeto." } if Assignment.where(user_id: assignment_params[:user_id], project_id: assignment_params[:project_id]).present?
+        if Assignment.where(user_id: assignment_params[:user_id], project_id: assignment_params[:project_id]).present?
+          flash[:warning] = "Aluno já faz parte do projeto."
+          format.html { redirect_to projects_path }
+        end
 
         if @assignment.save
-          format.html { redirect_to projects_path, notice: "Assignment was successfully created." }
+          flash[:notice] = "Aluno vinculado com sucesso."
+          format.html { redirect_to projects_path }
           format.json { render :show, status: :created, location: @assignment }
         else
+          flash[:alert] = "Não foi possível vincular aluno."
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @assignment.errors, status: :unprocessable_entity }
         end
@@ -53,9 +58,11 @@ class AssignmentsController < ApplicationController
     if has_permission?
       respond_to do |format|
         if @assignment.update(assignment_params)
-          format.html { redirect_to assignment_url(@assignment), notice: "Assignment was successfully updated." }
+          flash[:notice] = "Vínculo atualizado com sucesso."
+          format.html { redirect_to assignment_url(@assignment) }
           format.json { render :show, status: :ok, location: @assignment }
         else
+          flash[:alert] = "Não foi possível atualizar vínculo."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @assignment.errors, status: :unprocessable_entity }
         end
@@ -71,7 +78,8 @@ class AssignmentsController < ApplicationController
       @assignment.destroy
 
       respond_to do |format|
-        format.html { redirect_to assignments_url, notice: "Assignment was successfully destroyed." }
+        flash[:notice] = "Vínculo excluído com sucesso."
+        format.html { redirect_to assignments_url }
         format.json { head :no_content }
       end
     else

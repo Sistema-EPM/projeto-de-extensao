@@ -36,9 +36,11 @@ class OrganizationsController < ApplicationController
         if current_admin.present?
           @organization.admin_id = current_admin.id
           if @organization.save
-            format.html { redirect_to projects_path, notice: "Organization was successfully created." }
+            flash[:notice] = "Organização criada com sucesso."
+            format.html { redirect_to projects_path }
             format.json { render :show, status: :created, location: @organization }
           else
+            flash[:alert] = "Não foi possível criar organização."
             format.html { render :new, status: :unprocessable_entity }
             format.json { render json: @organization.errors, status: :unprocessable_entity }
           end
@@ -54,9 +56,11 @@ class OrganizationsController < ApplicationController
     if admin_signed_in?
       respond_to do |format|
         if @organization.update(organization_params)
-          format.html { redirect_to organization_url(@organization), notice: "Organization was successfully updated." }
+          flash[:notice] = "Organização atualizada com sucesso."
+          format.html { redirect_to organization_url(@organization) }
           format.json { render :show, status: :ok, location: @organization }
         else
+          flash[:alert] = "Não foi possível atualizar organização."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @organization.errors, status: :unprocessable_entity }
         end
@@ -72,7 +76,8 @@ class OrganizationsController < ApplicationController
       @organization.destroy
 
       respond_to do |format|
-        format.html { redirect_to organizations_url, notice: "Organization was successfully destroyed." }
+        flash[:notice] = "Organização excluída com sucesso."
+        format.html { redirect_to organizations_url }
         format.json { head :no_content }
       end
     else
