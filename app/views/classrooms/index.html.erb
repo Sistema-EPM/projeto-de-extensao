@@ -1,6 +1,6 @@
 <p style="color: green"><%= notice %></p>
 
-<div id="classrooms">
+<div id="classrooms" class="formulario">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
     <%= form_tag(destroy_selected_classrooms_path, method: :delete, id: "delete-form") do %>
@@ -16,8 +16,8 @@
                 </td>
               <% end %>
               <td><%= link_to classroom.name, classroom, class: "row-link" %></td>
-              <td><%= classroom.start_date %></td>
-              <td><%= classroom.end_date %></td>
+              <td><%= classroom.start_date.strftime("%d/%m/%Y") %></td>
+              <td><%= classroom.end_date.strftime("%d/%m/%Y") %></td>
               <td><%= classroom.status ? "Ativo" : "Inativo" %></td>
               <td><%= classroom.course.name %></td>
             </tr>
