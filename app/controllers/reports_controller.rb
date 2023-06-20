@@ -14,6 +14,7 @@ class ReportsController < ApplicationController
 
   # GET /reports/1 or /reports/1.json
   def show
+    @context = "Dados do Reporte"
   end
 
   # GET /reports/new

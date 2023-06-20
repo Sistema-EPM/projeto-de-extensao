@@ -30,7 +30,7 @@ class UsersController < ApplicationController
   # GET /students/1 or /students/1.json
   def show
     @context = "Dados do Aluno"
-    @projects_by_student = @student.projects.includes(:reports)
+    @projects_by_student = @student.projects.includes(:reports).distinct
   end
 
   def show_responsible

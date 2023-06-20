@@ -1,45 +1,47 @@
 <p style="color: green"><%= notice %></p>
 
-<% if @projects_by_name.nil? %>
-  <p>Nenhum projeto encontrado</p>
-<% else %>
-  <%= render partial: "shared/pages_index" %>
-  <div style="padding: 20px 0" class="table-responsive primary-table">
-    <table class="table table-bordered table-hover">
-      <thead>
-        <tr>
-          <th style="text-align: center">Nome</th>
-          <th style="text-align: center">Competência</th>
-          <th style="text-align: center">Status</th>
-          <th style="text-align: center">Modalidade</th>
-          <th style="text-align: center">Descrição</th>
-          <th style="text-align: center">Turma</th>
-          <th style="text-align: center">Coordenador</th>
-          <th style="text-align: center">Projeto ODS</th>
-          <th style="text-align: center">Horas reportadas</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @projects_by_name.each do |project| %>
+<div class="formulario">
+  <% if @projects_by_name.nil? %>
+    <p>Nenhum projeto encontrado</p>
+  <% else %>
+    <%= render partial: "shared/pages_index" %>
+    <div style="padding: 20px 0" class="table-responsive primary-table">
+      <table class="table table-bordered table-hover">
+        <thead>
           <tr>
-            <td><%= project.name %></td>
-            <td><%= project.competency %></td>
-            <td><%= project.status %></td>
-            <td><%= project.modality %></td>
-            <td><%= project.description %></td>
-            <td><%= project.classroom.name %></td>
-            <td><%= project.user.name %></td>
-            <td><%= project.ods_project.name %></td>
-            <% if current_user.present? && !current_user.is_responsible %>
-              <td><%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %></td>
-            <% else %>
-              <td><%= project.reports.sum(:reported_effort) %></td>
-            <% end %>
+            <th style="text-align: center" class="color-label">Nome</th>
+            <th style="text-align: center" class="color-label">Competência</th>
+            <th style="text-align: center" class="color-label">Status</th>
+            <th style="text-align: center" class="color-label">Modalidade</th>
+            <th style="text-align: center" class="color-label">Descrição</th>
+            <th style="text-align: center" class="color-label">Turma</th>
+            <th style="text-align: center" class="color-label">Coordenador</th>
+            <th style="text-align: center" class="color-label">Projeto ODS</th>
+            <th style="text-align: center" class="color-label">Horas reportadas</th>
           </tr>
-        <% end %>
-      </tbody>
-    </table>
-    <%= link_to "Novo", new_project_path, class: "btn btn-primary" %>
-  </div>
-<% end %>
+        </thead>
+
+        <tbody>
+          <% @projects_by_name.each do |project| %>
+            <tr>
+              <td><%= project.name %></td>
+              <td><%= project.competency %></td>
+              <td><%= project.status %></td>
+              <td><%= project.modality %></td>
+              <td><%= project.description %></td>
+              <td><%= project.classroom.name %></td>
+              <td><%= project.user.name %></td>
+              <td><%= project.ods_project.name %></td>
+              <% if current_user.present? && !current_user.is_responsible %>
+                <td><%= project.reports.where(user_id: current_user.id).sum(:reported_effort) %></td>
+              <% else %>
+                <td><%= project.reported_hours %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= link_to "Novo", new_project_path, class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
