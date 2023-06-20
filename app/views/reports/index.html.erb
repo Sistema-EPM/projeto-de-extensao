@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <div id="reports" class="formulario">
   <%= render partial: "shared/pages_index" %>
   <div style="padding: 20px 0">
@@ -23,7 +21,7 @@
               <td><%= report.project.name %></td>
               <td><%= report.user.name %></td>
               <% if report.file.attached? %>
-                <td><a href="<%= url_for(report.file) %>"><%= report.file.filename %></a></td>
+                <td><a href="<%= url_for(report.file) %>" target="_blank"><%= report.file.filename %></a></td>
               <% else %>
                 <td>Nenhum arquivo anexado</td>
               <% end %>

@@ -9,3 +9,4 @@
 //= link classrooms.js
 //= link courses.js
 //= link student_reports.js
+//= link messages.js

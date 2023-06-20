@@ -67,9 +67,11 @@ class ProjectsController < ApplicationController
 
       respond_to do |format|
         if @project.save
-          format.html { redirect_to project_url(@project), notice: "Project was successfully created." }
+          flash[:notice] = "Projeto criado com sucesso."
+          format.html { redirect_to project_url(@project) }
           format.json { render :show, status: :created, location: @project }
         else
+          flash[:alert] = "Não foi possível criar projeto."
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @project.errors, status: :unprocessable_entity }
         end
@@ -84,9 +86,11 @@ class ProjectsController < ApplicationController
     if has_permission?
       respond_to do |format|
         if @project.update(project_params)
-          format.html { redirect_to project_url(@project), notice: "Project was successfully updated." }
+          flash[:notice] = "Projeto atualizado com sucesso."
+          format.html { redirect_to project_url(@project) }
           format.json { render :show, status: :ok, location: @project }
         else
+          flash[:alert] = "Não foi possível atualizar projeto."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @project.errors, status: :unprocessable_entity }
         end
@@ -109,7 +113,8 @@ class ProjectsController < ApplicationController
       end
 
       respond_to do |format|
-        format.html { redirect_to projects_url, notice: "Projeto excluído com sucesso." }
+        flash[:notice] = "Projeto excluído com sucesso."
+        format.html { redirect_to projects_url }
         format.json { head :no_content }
       end
     else

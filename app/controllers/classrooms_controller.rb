@@ -41,9 +41,11 @@ class ClassroomsController < ApplicationController
 
       respond_to do |format|
         if @classroom.save
-          format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully created." }
+          flash[:notice] = "Turma criada com sucesso."
+          format.html { redirect_to classroom_url(@classroom) }
           format.json { render :show, status: :created, location: @classroom }
         else
+          flash[:alert] = "Não foi possível criar turma."
           format.html { render :new, status: :unprocessable_entity }
           format.json { render json: @classroom.errors, status: :unprocessable_entity }
         end
@@ -58,9 +60,11 @@ class ClassroomsController < ApplicationController
     if has_permission?
       respond_to do |format|
         if @classroom.update(classroom_params)
-          format.html { redirect_to classroom_url(@classroom), notice: "Classroom was successfully updated." }
+          flash[:notice] = "Turma atualizada com sucesso."
+          format.html { redirect_to classroom_url(@classroom) }
           format.json { render :show, status: :ok, location: @classroom }
         else
+          flash[:alert] = "Não foi possível atualizar turma."
           format.html { render :edit, status: :unprocessable_entity }
           format.json { render json: @classroom.errors, status: :unprocessable_entity }
         end
@@ -83,6 +87,7 @@ class ClassroomsController < ApplicationController
       end
 
       respond_to do |format|
+        flash[:notice] = "Turma excluída com sucesso."
         format.html { redirect_to classrooms_url, notice: "Turma excluída com sucesso." }
         format.json { head :no_content }
       end

@@ -12,16 +12,9 @@
 
   <body>
     <%= render 'shared/navbar' %>
-    <%# <p class="notice"><%= notice %>
-    <%# <p class="alert"><%= alert %>
-
-    <% flash.each do |key, value| %>
-      <div class="flash-<%= key %>">
-        <%= value %>
-      </div>
-    <% end %>
 
     <div class="primary-table" style="padding: 2% 0">
+      <%= render 'shared/flash_messages' %>
       <%= yield %>
     </div>
   </body>
