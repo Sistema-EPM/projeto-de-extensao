@@ -1,4 +1,4 @@
-en:
+pt-BR:
   devise:
     confirmations:
       confirmed: "Seu e-mail foi confirmado com sucesso."
@@ -35,6 +35,11 @@ en:
       updated: "Sua senha foi alterada com sucesso. Você está conectado."
       updated_not_active: "Sua senha foi alterada com sucesso."
     registrations:
+      user:
+        email:
+          blank: "não pode ficar em branco"
+        password:
+          blank: "não pode ficar em branco"
       destroyed: "Sua conta foi cancelada com sucesso. Esperamos vê-lo novamente em breve."
       signed_up: "Bem-vindo! Você se registrou com êxito."
       signed_up_but_inactive: "Você se registrou com sucesso. No entanto, este recurso requer que sua conta seja ativada por meio de um link enviado para seu endereço de e-mail."
