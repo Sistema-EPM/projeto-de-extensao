@@ -10,6 +10,7 @@ gem 'bootstrap', '~> 5.2', '>= 5.2.3'
 gem 'twitter-bootstrap-rails'
 
 gem 'devise'
+gem "sqlite3", "~> 1.4"
 
 # Upload de arquivos
 gem 'activestorage'
