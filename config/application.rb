@@ -20,6 +20,6 @@ module Myapp
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    Rails.application.config.hosts << "https://epm4-edufss14.b4a.run/"
+    config.hosts << "epm4-edufss14.b4a.run/"
   end
 end
