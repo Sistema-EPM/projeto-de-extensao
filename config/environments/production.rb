@@ -92,5 +92,8 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.hosts << "epm4-edufss14.b4a.run"
+  config.force_ssl = true
+  config.action_dispatch.trusted_proxies = ['^https?://epm4-edufss14\.b4a\.run$']
+
   config.server.port = 3000
 end
