@@ -12,7 +12,6 @@ module Myapp
     config.assets.unknown_asset_fallback = true
     config.load_defaults 7.0
     config.i18n.default_locale = :'pt-BR'
-    config.hosts << "epm4-edufss14.b4a.run"
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
