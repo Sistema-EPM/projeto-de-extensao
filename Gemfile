@@ -11,6 +11,7 @@ gem 'twitter-bootstrap-rails'
 
 gem 'devise'
 gem "sqlite3", "~> 1.4"
+gem 'rack-cors'
 
 # Upload de arquivos
 gem 'activestorage'
