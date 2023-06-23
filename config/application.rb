@@ -13,12 +13,12 @@ module Myapp
     config.load_defaults 7.0
     config.i18n.default_locale = :'pt-BR'
 
-    # config.middleware.insert_before 0, Rack::Cors do
-    #   allow do
-    #     origins '*'
-    #     resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head]
-    #   end
-    # end
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      end
+    end
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
