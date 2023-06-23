@@ -158,3 +158,29 @@ buttonRegister :hover {
 td {
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .primary-table {
+    max-width: 90vw;
+  }
+
+  .box-cadastro {
+    width: 90%;
+  }
+
+  .container-register {
+    width: 90%;
+  }
+
+  .formulario {
+    padding: 2rem;
+    top: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario {
+    padding: 1rem;
+    top: 30px;
+  }
+}
