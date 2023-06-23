@@ -14,7 +14,15 @@ Rails.application.routes.draw do
   resources :login
 
   devise_scope :user do
-    root to: 'devise/sessions#new'
+    # root to: 'devise/sessions#new'
+    unauthenticated do
+      root to: 'devise/sessions#new', as: :unauthenticated_root
+    end
+
+    authenticated do
+      root to: 'projects#index', as: :authenticated_root
+    end
+
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
