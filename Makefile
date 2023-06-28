@@ -1,7 +1,6 @@
 # Inicia o docker
 docker:
-	sudo rm tmp/pids/server.pid -f
-	sudo docker compose up --remove-orphans
+	sudo docker compose up
 
 # Necessario quando precisar rodar algum comando no servidor
 bash:
