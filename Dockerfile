@@ -13,7 +13,7 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 
 RUN bundle install
 
-COPY . /myapp
+COPY . .
 
 EXPOSE 3000
 

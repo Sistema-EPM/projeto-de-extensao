@@ -85,7 +85,11 @@ class UsersController < ApplicationController
       @student.is_responsible = false
 
       respond_to do |format|
-        if @student.save
+        if @student.classroom_id.nil?
+          flash[:alert] = "Não foi possível criar aluno, turma não pode ficar vazio."
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @student.errors, status: :unprocessable_entity }
+        elsif @student.save
           flash[:notice] = "Aluno criado com sucesso."
           format.html { redirect_to user_url(@student) }
           format.json { render :show, status: :created, location: @student }

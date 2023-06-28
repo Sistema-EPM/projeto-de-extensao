@@ -1,13 +1,14 @@
 class ApplicationController < ActionController::Base
-  add_flash_types :info, :error, :success, :warning
+  protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :authenticate_user!, unless: :devise_controller?
 
   def set_organization
-    current_admin.present? ? Organization.where(admin_id: current_admin.id).first : current_user.try(:organization)
+    current_admin.present? ? Organization.find_by(admin_id: current_admin.id) : current_user&.organization
   end
 
   def has_permission?
-    (admin_signed_in? || current_user.try(:is_responsible))
+    admin_signed_in? || current_user&.is_responsible
   end
 
   def access_denied
@@ -32,7 +33,7 @@ class ApplicationController < ActionController::Base
         users_path
       end
     elsif resource.is_a?(Admin)
-      organization_already_created = Organization.where(admin_id: current_admin.id).exists?
+      organization_already_created = Organization.exists?(admin_id: current_admin.id)
 
       if organization_already_created
         projects_path
@@ -41,6 +42,14 @@ class ApplicationController < ActionController::Base
       end
     else
       super
+    end
+  end
+
+  private
+
+  def authenticate_user!
+    unless admin_signed_in? || user_signed_in?
+      redirect_to new_user_session_path, alert: "Você precisa estar logado para acessar essa página."
     end
   end
 end
