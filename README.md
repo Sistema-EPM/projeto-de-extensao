@@ -1,4 +1,4 @@
-# Container básico para Rails 7.
+# Sistema gerenciador de curricularização da extensão.
 
 * Ruby 3
 * Rails 7
