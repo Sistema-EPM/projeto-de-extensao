@@ -1,0 +1,12 @@
+RAILS_MAX_THREADS=5
+PORT=3000
+DATABASE_URL=postgresql://postgres:J8H1ElDtI6pC4dE77A3O@containers-us-west-165.railway.app:7377/railway
+LANG=en_US.UTF-8
+RACK_ENV=production
+RAILS_ENV=production
+RAILS_MASTER_KEY=20a09641e5b8574faad379907911fef2
+PGDATABASE=railway
+PGHOST=containers-us-west-165.railway.app
+PGPASSWORD=J8H1ElDtI6pC4dE77A3O
+PGPORT=7377
+PGUSER=postgres
